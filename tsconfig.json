@@ -18,11 +18,16 @@
     "importHelpers": true,
     "target": "es2020",
     "module": "es2020",
+    "strictNullChecks": false,
     "lib": [
       "es2020",
       "dom"
     ],
     "paths": {
+      "@features/*": ["src/app/features/*"],
+      "@guards/*": ["src/app/guards/*"],
+      "@state/*": ["src/app/state/*"],
+      "@models/*": ["src/app/models/*"],
       "@app/*": ["src/app/*"],
       "@src/*": ["src/*"],
     }

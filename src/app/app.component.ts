@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AuthFacade } from '@state/auth';
 
 @Component({
   selector: 'app-root',
@@ -7,13 +8,16 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'dsr-lang';
-  constructor(private fdb: AngularFirestore) {}
+  title = 'Dikusar Language Box';
 
-  ngOnInit() {
-    this.fdb
-      .collection('test')
-      .snapshotChanges()
-      .subscribe((data) => console.log(data));
+  constructor(private fdb: AngularFirestore, private authFacade: AuthFacade) {}
+
+  isInitialized$ = this.authFacade.isInitialized$;
+  isAuthorized$ = this.authFacade.isAuthorized$;
+  isLoading$ = this.authFacade.isLoading$;
+  user$ = this.authFacade.user$;
+
+  ngOnInit(): void {
+    this.authFacade.init();
   }
 }

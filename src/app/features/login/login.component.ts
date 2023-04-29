@@ -1,15 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { AuthFacade } from '@state/auth';
 
 @Component({
   selector: 'dsr-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
+  constructor(private authFacade: AuthFacade) {}
 
-  constructor() { }
+  isLoading$ = this.authFacade.isLoading$;
 
-  ngOnInit(): void {
+  signIn() {
+    this.authFacade.signIn({ email: 'test@test.io', password: 'A12345678!' });
   }
 
+  signOut() {
+    this.authFacade.signOut();
+  }
 }
