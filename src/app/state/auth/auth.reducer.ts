@@ -44,7 +44,7 @@ const featureReducer = createReducer(
     ...initialState,
     isInitialized: true,
   })),
-  on(fromActions.signInError, fromActions.signOutError, (state, payload) => ({
+  on(fromActions.initFail, fromActions.signInFail, fromActions.signOutFail, (state, payload) => ({
     ...state,
     error: payload.error,
     isLoading: false,

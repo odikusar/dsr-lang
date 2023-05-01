@@ -12,11 +12,11 @@ export class LoginComponent {
 
   isLoading$ = this.authFacade.isLoading$;
 
-  signIn() {
+  signIn(): void {
     this.authFacade.signIn({ email: 'test@test.io', password: 'A12345678!' });
   }
 
-  signOut() {
-    this.authFacade.signOut();
+  signInOleg(): void {
+    this.authFacade.signIn({ email: 'test@test.ios', password: 'A12345678!' });
   }
 }

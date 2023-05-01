@@ -1,0 +1,2 @@
+<button *ngIf="isAuthorized" (click)="onSignOut()">Sign Out</button>
+<a *ngIf="!isAuthorized" routerLink="/login">Sign In</a>

@@ -1,1 +1,30 @@
-<p>workspace works!</p>
+<p>workspace</p>
+
+<div class="row">
+  <div class="col-8">
+    <label>
+      <input type="file" accept=".csv" (change)="selectFile($event)" />
+    </label>
+  </div>
+</div>
+
+<div *ngIf="currentFileUpload" class="progress mt-2">
+  <div
+    class="progress-bar progress-bar-info"
+    role="progressbar"
+    attr.aria-valuenow="{{ percentage }}"
+    aria-valuemin="0"
+    aria-valuemax="100"
+    [ngStyle]="{ width: percentage + '%' }"
+  >
+    {{ percentage }}%
+  </div>
+</div>
+<br />
+<br />
+<br />
+
+<div *ngFor="let memoFile of memoFiles$ | async">
+  <span (click)="readFile(memoFile)">{{ memoFile.name }}</span>
+  <button (click)="deleteFile(memoFile)">x</button>
+</div>

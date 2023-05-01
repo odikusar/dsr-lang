@@ -8,6 +8,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./features/workspace/workspace.module').then((m) => m.WorkspaceModule),
     canActivate: [AuthGuard],
+    runGuardsAndResolvers: 'always',
   },
   {
     path: 'login',

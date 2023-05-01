@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AuthFacade } from '@state/auth';
 
 @Component({
@@ -10,7 +9,7 @@ import { AuthFacade } from '@state/auth';
 export class AppComponent implements OnInit {
   title = 'Dikusar Language Box';
 
-  constructor(private fdb: AngularFirestore, private authFacade: AuthFacade) {}
+  constructor(private authFacade: AuthFacade) {}
 
   isInitialized$ = this.authFacade.isInitialized$;
   isAuthorized$ = this.authFacade.isAuthorized$;
@@ -19,5 +18,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.authFacade.init();
+  }
+
+  signOut(): void {
+    this.authFacade.signOut();
   }
 }
