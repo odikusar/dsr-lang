@@ -26,4 +26,16 @@ export class MemoFileFacade {
 
     return this.memoFiles$;
   }
+
+  create(memoFile: Partial<MemoFile>): void {
+    this.store.dispatch(fromActions.create({ payload: memoFile }));
+  }
+
+  update(memoFile: Partial<MemoFile>): void {
+    this.store.dispatch(fromActions.update({ payload: { id: memoFile.id, changes: memoFile } }));
+  }
+
+  delete(memoFileId: string): void {
+    this.store.dispatch(fromActions.deleteOne({ id: memoFileId }));
+  }
 }

@@ -28,7 +28,33 @@ const featureReducer = createReducer(
       error: null,
     })
   ),
-  on(fromActions.loadAllFail, (state, { error }) => ({ ...state, isLoading: false, error }))
+  on(fromActions.create, fromActions.update, fromActions.deleteOne, (state) => ({
+    ...state,
+    error: null,
+    isLoading: true,
+  })),
+  on(fromActions.createSuccess, (state, { payload }) =>
+    adapter.upsertOne(payload, {
+      ...state,
+      isLoading: false,
+      error: null,
+    })
+  ),
+  on(fromActions.updateSuccess, (state, { payload }) =>
+    adapter.updateOne(payload, {
+      ...state,
+      isLoading: false,
+      error: null,
+    })
+  ),
+  on(fromActions.deleteOneSuccess, (state, payload) => adapter.removeOne(payload.id, state)),
+  on(
+    fromActions.loadAllFail,
+    fromActions.updateFail,
+    fromActions.createFail,
+    fromActions.deleteOneFail,
+    (state, { error }) => ({ ...state, isLoading: false, error })
+  )
 );
 
 export function reducer(state: MemoFileState | undefined, action: Action) {

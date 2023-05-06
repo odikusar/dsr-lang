@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore, DocumentChangeAction } from '@angular/fire/compat/firestore';
 import { MemoFile } from '@models/memo-file.model';
-import { Observable, map, take } from 'rxjs';
+import { Observable, from, map, take } from 'rxjs';
 import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FireApiService {
-  constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore) {}
+  constructor(private afs: AngularFirestore) {}
 
   documentToItem<T>(docAction: DocumentChangeAction<T>): T {
     const data = docAction.payload.doc.data();
@@ -39,5 +38,21 @@ export class FireApiService {
         take(1),
         map((items) => items.map((docAction) => this.documentToItem<MemoFile>(docAction)))
       );
+  }
+
+  createMemoFile(memoFile: Partial<MemoFile>): Observable<MemoFile> {
+    return from(this.afs.collection<Partial<MemoFile>>('memoFiles').add(memoFile)).pipe(
+      map((res) => ({ ...memoFile, id: res.id } as MemoFile))
+    );
+  }
+
+  updateMemoFile(memoFile: Partial<MemoFile>): Observable<MemoFile> {
+    return from(
+      this.afs.collection<Partial<MemoFile>>('memoFiles').doc(memoFile.id).set(memoFile)
+    ).pipe(map(() => ({ ...memoFile } as MemoFile)));
+  }
+
+  deleteMemoFile(memoFileId: string): Observable<void> {
+    return from(this.afs.doc<User>(`memoFiles/${memoFileId}`).delete());
   }
 }

@@ -6,6 +6,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { from, of } from 'rxjs';
 import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
 import * as fromActions from './auth.actions';
+import { AuthFacade } from './auth.facade';
 
 @Injectable()
 export class AuthEffects {
@@ -13,6 +14,7 @@ export class AuthEffects {
     private actions$: Actions,
     private afAuth: AngularFireAuth,
     private fireApi: FireApiService,
+    private authFacade: AuthFacade,
     private router: Router
   ) {}
 
@@ -23,6 +25,7 @@ export class AuthEffects {
       switchMap((user) => {
         if (!!user) {
           return this.fireApi.getUser(user.uid).pipe(
+            tap((user) => this.authFacade.setUserId(user.id)),
             map((user) => fromActions.initAuthorized({ user })),
             catchError((error) => of(fromActions.initFail(error)))
           );
@@ -45,6 +48,7 @@ export class AuthEffects {
         ).pipe(
           switchMap((signInState) =>
             this.fireApi.getUser(signInState.user.uid).pipe(
+              tap((user) => this.authFacade.setUserId(user.id)),
               map((user) => fromActions.signInSuccess({ user })),
               tap(() => {
                 this.router.navigate(['/']);
@@ -71,6 +75,7 @@ export class AuthEffects {
         from(this.afAuth.signOut()).pipe(
           take(1),
           map(() => fromActions.signOutSuccess()),
+          tap(() => this.authFacade.eraseUserId()),
           tap(() => this.router.navigate(['/login'])),
           catchError((error) => of(fromActions.signOutFail(error)))
         )
