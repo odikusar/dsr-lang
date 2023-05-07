@@ -5,14 +5,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { environment } from '../environments/environment';
+import { environment } from '@src/environments/environment';
+import { StateModule } from '@state/state.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutModule } from './shared/layout/layout.module';
-import { StateModule } from './state/state.module';
-
-import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,10 +21,10 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
     NoopAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase.config),
     AngularFirestoreModule,
-    LayoutModule,
     StateModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
+    LayoutModule,
     HttpClientModule,
   ],
   providers: [],

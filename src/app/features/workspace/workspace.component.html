@@ -18,6 +18,9 @@
 
 <br />
 <br />
+{{ selectedMemoFileId$ | async }}
+<br />
+{{ (memoRows$ | async)?.length }}
 <br />
 
 <div *ngFor="let memoFile of memoFiles$ | async">

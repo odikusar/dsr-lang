@@ -37,3 +37,5 @@ export const deleteOneSuccess = createAction(
 );
 
 export const deleteOneFail = createAction('[MemoFile] Delete One Fail', props<{ error: Error }>());
+
+export const selectOne = createAction('[MemoFile] Select One', props<{ id: string }>());

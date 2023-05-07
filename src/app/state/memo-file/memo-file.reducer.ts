@@ -9,17 +9,18 @@ export interface MemoFileState extends EntityState<MemoFile> {
   isLoading: boolean;
   isAllLoaded: boolean;
   error: Error;
+  selectedId: string;
 }
 
 export const initialState: MemoFileState = adapter.getInitialState({
   isLoading: false,
   isAllLoaded: false,
   error: null,
+  selectedId: null,
 });
 
 const featureReducer = createReducer(
   initialState,
-  on(fromActions.loadAll, (state) => ({ ...state, error: null, isLoading: true })),
   on(fromActions.loadAllSuccess, (state, { payload }) =>
     adapter.setAll(payload, {
       ...state,
@@ -28,6 +29,11 @@ const featureReducer = createReducer(
       error: null,
     })
   ),
+  on(fromActions.loadAll, (state) => ({ ...state, error: null, isLoading: true })),
+  on(fromActions.selectOne, (state, { id }) => ({
+    ...state,
+    selectedId: id,
+  })),
   on(fromActions.create, fromActions.update, fromActions.deleteOne, (state) => ({
     ...state,
     error: null,
