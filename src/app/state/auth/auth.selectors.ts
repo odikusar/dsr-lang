@@ -13,3 +13,5 @@ export const selectIsInitialized = () =>
   createSelector(selectState(), (state: AuthState) => state.isInitialized);
 
 export const selectUser = () => createSelector(selectState(), (state: AuthState) => state.user);
+
+export const selectError = () => createSelector(selectState(), (state: AuthState) => state.error);

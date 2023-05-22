@@ -1,4 +1,14 @@
-.content,
-.toolbar {
-  display: none !important;
+@import './variables';
+
+.dsr-main-wrapper {
+  background-color: var(--c-secondary-bg);
+  height: 100%;
+}
+
+.dsr-content-wrapper {
+  max-width: $wide-screen-workspace-width;
+  height: calc(100% - $header-toolbar-height);
+  padding: 0 24px;
+  margin: 0 auto;
+  background-color: var(--c-primary-bg);
 }

@@ -1,3 +1,25 @@
-<p>login works!</p>
-<button (click)="signIn()">Sign In!</button>
-<button (click)="signInOleg()">Sign In Oleg!</button>
+<mat-card>
+  <mat-card-title>Login</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <p>
+        <mat-form-field>
+          <input type="email" matInput placeholder="Email" formControlName="email" />
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field>
+          <input type="password" matInput placeholder="Password" formControlName="password" />
+        </mat-form-field>
+      </p>
+
+      <p *ngIf="!!(error$ | async)" class="dsr-error">
+        {{ (error$ | async).message }}
+      </p>
+      <div class="dsr-login-button">
+        <button type="submit" mat-button [disabled]="form.invalid">Login</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

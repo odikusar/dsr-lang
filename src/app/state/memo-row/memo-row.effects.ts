@@ -46,7 +46,7 @@ export class MemoRowEffects {
             return memoRows as MemoRow[];
           }),
           map((memoRows) => fromActions.loadAllSuccess({ payload: memoRows })),
-          catchError((error) => of(fromActions.loadAllFail(error)))
+          catchError((error) => of(fromActions.loadAllFail({ error })))
         )
       )
     )

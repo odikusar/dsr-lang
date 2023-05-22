@@ -27,7 +27,7 @@ export class AuthEffects {
           return this.fireApi.getUser(user.uid).pipe(
             tap((user) => this.authFacade.setUserId(user.id)),
             map((user) => fromActions.initAuthorized({ user })),
-            catchError((error) => of(fromActions.initFail(error)))
+            catchError((error) => of(fromActions.initFail({ error })))
           );
         } else {
           return of(fromActions.initUnauthorized());
@@ -52,17 +52,10 @@ export class AuthEffects {
               map((user) => fromActions.signInSuccess({ user })),
               tap(() => {
                 this.router.navigate(['/']);
-              }),
-              catchError((error) => {
-                // this.notification.error(err.message);
-                return of(fromActions.signInFail(error));
               })
             )
           ),
-          catchError((error) => {
-            // this.notification.error(err.message);
-            return of(fromActions.signInFail(error));
-          })
+          catchError((error) => of(fromActions.signInFail({ error })))
         )
       )
     )
@@ -77,7 +70,7 @@ export class AuthEffects {
           map(() => fromActions.signOutSuccess()),
           tap(() => this.authFacade.eraseUserId()),
           tap(() => this.router.navigate(['/login'])),
-          catchError((error) => of(fromActions.signOutFail(error)))
+          catchError((error) => of(fromActions.signOutFail({ error })))
         )
       )
     )

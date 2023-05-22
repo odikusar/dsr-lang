@@ -1,0 +1,29 @@
+@import './mixins';
+@import './variables';
+@import './theme';
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+}
+
+@include tiny-screens {
+  .dsr-hide-for-small {
+    display: none;
+  }
+}
+
+@include small-screens {
+  .dsr-hide-for-small {
+    display: none;
+  }
+}
+
+.dsr-link {
+  &:hover {
+    opacity: 0.7;
+  }
+}

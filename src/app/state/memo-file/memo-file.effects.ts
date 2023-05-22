@@ -32,7 +32,7 @@ export class MemoFileEffects {
               fromActions.selectOne({ id: memoFiles[0].id })
             )
           ),
-          catchError((error) => of(fromActions.loadAllFail(error)))
+          catchError((error) => of(fromActions.loadAllFail({ error })))
         )
       )
     )
@@ -58,7 +58,7 @@ export class MemoFileEffects {
               fromActions.selectOne({ id: memoFile.id })
             )
           ),
-          catchError((error) => of(fromActions.createFail(error)))
+          catchError((error) => of(fromActions.createFail({ error })))
         )
       )
     )
@@ -75,7 +75,7 @@ export class MemoFileEffects {
               fromActions.selectOne({ id: memoFile.id })
             )
           ),
-          catchError((error) => of(fromActions.updateFail(error)))
+          catchError((error) => of(fromActions.updateFail({ error })))
         )
       )
     )
@@ -92,7 +92,7 @@ export class MemoFileEffects {
               fromActions.selectOne({ id: null })
             )
           ),
-          catchError((error) => of(fromActions.deleteOneFail(error)))
+          catchError((error) => of(fromActions.deleteOneFail({ error })))
         )
       )
     )

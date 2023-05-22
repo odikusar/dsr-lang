@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { LoadingBarService } from '@ngx-loading-bar/core';
 import { AuthFacade } from '@state/auth';
+import { ThemeService } from './services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -7,17 +9,23 @@ import { AuthFacade } from '@state/auth';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'Dikusar Language Box';
-
-  constructor(private authFacade: AuthFacade) {}
-
+  loader = this.loadingBar.useRef();
   isInitialized$ = this.authFacade.isInitialized$;
   isAuthorized$ = this.authFacade.isAuthorized$;
   isLoading$ = this.authFacade.isLoading$;
   user$ = this.authFacade.user$;
+  isDarkTheme$ = this.themeService.isDarkTheme$;
+
+  constructor(
+    private authFacade: AuthFacade,
+    private themeService: ThemeService,
+    private loadingBar: LoadingBarService
+  ) {}
 
   ngOnInit(): void {
     this.authFacade.init();
+    // this.loadingBar.start();
+    this.loader.start();
   }
 
   signOut(): void {

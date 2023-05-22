@@ -16,6 +16,7 @@ export class AuthFacade {
   isAuthorized$ = this.store.pipe(select(fromSelectors.selectIsAuthorized()));
   isInitialized$ = this.store.pipe(select(fromSelectors.selectIsInitialized()));
   user$ = this.store.pipe(select(fromSelectors.selectUser()));
+  error$ = this.store.pipe(select(fromSelectors.selectError()));
   userId: string = null;
 
   init(): void {

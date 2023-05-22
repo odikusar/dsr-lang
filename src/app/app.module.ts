@@ -6,7 +6,11 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  BrowserAnimationsModule,
+  NoopAnimationsModule,
+} from '@angular/platform-browser/animations';
+import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { environment } from '@src/environments/environment';
 import { StateModule } from '@state/state.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -26,6 +30,8 @@ import { LayoutModule } from './shared/layout/layout.module';
     AngularFireAuthModule,
     LayoutModule,
     HttpClientModule,
+    BrowserAnimationsModule,
+    LoadingBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

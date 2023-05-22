@@ -1,2 +1,21 @@
-<button *ngIf="isAuthorized" (click)="onSignOut()">Sign Out</button>
-<a *ngIf="!isAuthorized" routerLink="/login">Sign In</a>
+<mat-toolbar class="dsr-header-toolbar mat-toolbar">
+  <div class="dsr-header-toolbar__content">
+    <div class="dsr-header-toolbar__title dsr-hide-for-small">Dikusar Language Memo App.</div>
+    <div class="dsr-header-toolbar__theme">
+      <mat-slide-toggle [checked]="isDarkTheme$ | async" (change)="toggleTheme($event)">
+      </mat-slide-toggle>
+      <mat-icon class="mat-icon material-icons">bedtime</mat-icon>
+    </div>
+
+    <ng-container *ngIf="isAuthorized">
+      <div class="dsr-header-toolbar__user">
+        <span>{{ user.name }}</span>
+        <mat-icon class="mat-icon material-icons">person</mat-icon>
+      </div>
+      <div class="dsr-header-toolbar__logout dsr-link" (click)="onSignOut()">
+        <span class="dsr-hide-for-small">logout</span>
+        <mat-icon class="mat-icon material-icons">logout</mat-icon>
+      </div>
+    </ng-container>
+  </div>
+</mat-toolbar>
