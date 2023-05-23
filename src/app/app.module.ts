@@ -11,6 +11,7 @@ import {
   BrowserAnimationsModule,
   NoopAnimationsModule,
 } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { environment } from '@src/environments/environment';
 import { StateModule } from '@state/state.module';
@@ -34,6 +35,13 @@ import { LayoutModule } from './shared/layout/layout.module';
     BrowserAnimationsModule,
     LoadingBarModule,
     MatProgressSpinnerModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      // registrationStrategy: 'registerWhenStable:30000'
+      registrationStrategy: 'registerImmediately',
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],
