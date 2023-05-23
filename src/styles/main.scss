@@ -12,13 +12,13 @@ body {
 
 @include tiny-screens {
   .dsr-hide-for-small {
-    display: none;
+    display: none !important;
   }
 }
 
 @include small-screens {
   .dsr-hide-for-small {
-    display: none;
+    display: none !important;
   }
 }
 

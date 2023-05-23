@@ -1,7 +1,12 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { DEMO_USER } from '@app/constants';
+import { Actions, ofType } from '@ngrx/effects';
+import { LoadingBarService } from '@ngx-loading-bar/core';
 import { AuthFacade } from '@state/auth';
+import * as fromActions from '@state/auth/auth.actions';
+import { Subject, take, takeUntil } from 'rxjs';
 
 interface LoginForm {
   email: FormControl<string>;
@@ -14,20 +19,11 @@ interface LoginForm {
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LoginComponent {
-  submit() {
-    if (this.form.valid) {
-      const { email, password } = this.form.value;
+export class LoginComponent implements OnInit, OnDestroy {
+  private loader = this.loadingBar.useRef();
+  private onDestroy$: Subject<void> = new Subject();
 
-      this.authFacade.signIn({ email, password });
-
-      // this.authFacade.signIn({ email: 'test@test.io', password: 'A12345678!' });
-    }
-  }
   error$ = this.authFacade.error$;
-
-  constructor(private authFacade: AuthFacade) {}
-
   isLoading$ = this.authFacade.isLoading$;
 
   form = new FormGroup<LoginForm>({
@@ -38,4 +34,36 @@ export class LoginComponent {
       validators: [Validators.required],
     }),
   });
+
+  constructor(
+    private authFacade: AuthFacade,
+    private loadingBar: LoadingBarService,
+    private actions$: Actions,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.actions$
+      .pipe(ofType(fromActions.signInSuccess), take(1))
+      .subscribe(() => this.router.navigate(['/']));
+
+    this.actions$
+      .pipe(ofType(fromActions.signInSuccess, fromActions.signInFail), takeUntil(this.onDestroy$))
+      .subscribe(() => this.loader.complete());
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+  }
+
+  submit(): void {
+    this.loader.start();
+
+    if (this.form.valid) {
+      const { email, password } = this.form.value;
+
+      this.authFacade.signIn({ email, password });
+    }
+  }
 }

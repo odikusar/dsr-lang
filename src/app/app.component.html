@@ -1,15 +1,16 @@
 <ngx-loading-bar [includeSpinner]="false"></ngx-loading-bar>
 <div [ngClass]="{ 'dsr-dark-theme': isDarkTheme$ | async }" class="dsr-main-wrapper">
-  <!-- <div [ngClass]="{'dark-theme': isDarkTheme | async}"> -->
   <ng-container *ngIf="isInitialized$ | async; else isNotInitialized">
     <dsr-layout-header
       [isAuthorized]="isAuthorized$ | async"
       [user]="user$ | async"
       (signOut)="signOut()"
     ></dsr-layout-header>
+
     <div class="dsr-content-wrapper">
       <router-outlet></router-outlet>
     </div>
   </ng-container>
-  <ng-template #isNotInitialized> LOADING ...... </ng-template>
+
+  <ng-template #isNotInitialized><mat-spinner class="dsr-main-spinner"></mat-spinner></ng-template>
 </div>

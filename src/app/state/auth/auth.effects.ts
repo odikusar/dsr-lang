@@ -49,10 +49,7 @@ export class AuthEffects {
           switchMap((signInState) =>
             this.fireApi.getUser(signInState.user.uid).pipe(
               tap((user) => this.authFacade.setUserId(user.id)),
-              map((user) => fromActions.signInSuccess({ user })),
-              tap(() => {
-                this.router.navigate(['/']);
-              })
+              map((user) => fromActions.signInSuccess({ user }))
             )
           ),
           catchError((error) => of(fromActions.signInFail({ error })))
@@ -69,7 +66,6 @@ export class AuthEffects {
           take(1),
           map(() => fromActions.signOutSuccess()),
           tap(() => this.authFacade.eraseUserId()),
-          tap(() => this.router.navigate(['/login'])),
           catchError((error) => of(fromActions.signOutFail({ error })))
         )
       )

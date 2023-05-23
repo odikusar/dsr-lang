@@ -6,6 +6,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {
   BrowserAnimationsModule,
   NoopAnimationsModule,
@@ -32,6 +33,7 @@ import { LayoutModule } from './shared/layout/layout.module';
     HttpClientModule,
     BrowserAnimationsModule,
     LoadingBarModule,
+    MatProgressSpinnerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
