@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, ofType } from '@ngrx/effects';
 import { LoadingBarService } from '@ngx-loading-bar/core';
-import { AuthFacade } from '@state/auth';
-import * as fromActions from '@state/auth/auth.actions';
+import { UserFacade } from '@state/user';
+import * as fromUserActions from '@state/user/user.actions';
 import { filter, take } from 'rxjs';
 import { ThemeService } from './services/theme.service';
 
@@ -14,14 +14,14 @@ import { ThemeService } from './services/theme.service';
 })
 export class AppComponent implements OnInit {
   private loader = this.loadingBar.useRef();
-  isInitialized$ = this.authFacade.isInitialized$;
-  isAuthorized$ = this.authFacade.isAuthorized$;
-  isLoading$ = this.authFacade.isLoading$;
-  user$ = this.authFacade.user$;
+  isInitialized$ = this.userFacade.isInitialized$;
+  isAuthorized$ = this.userFacade.isAuthorized$;
+  isLoading$ = this.userFacade.isLoading$;
+  user$ = this.userFacade.user$;
   isDarkTheme$ = this.themeService.isDarkTheme$;
 
   constructor(
-    private authFacade: AuthFacade,
+    private userFacade: UserFacade,
     private themeService: ThemeService,
     private loadingBar: LoadingBarService,
     private actions$: Actions,
@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.handleLoader();
 
-    this.authFacade.init();
+    this.userFacade.initAuth();
   }
 
   private handleLoader(): void {
@@ -47,9 +47,9 @@ export class AppComponent implements OnInit {
 
   signOut(): void {
     this.actions$
-      .pipe(ofType(fromActions.signOutSuccess), take(1))
+      .pipe(ofType(fromUserActions.signOutSuccess), take(1))
       .subscribe(() => this.router.navigate(['/login']));
 
-    this.authFacade.signOut();
+    this.userFacade.signOut();
   }
 }

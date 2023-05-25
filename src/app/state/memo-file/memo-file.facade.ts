@@ -14,7 +14,6 @@ export class MemoFileFacade {
 
   memoFiles$ = this.store.pipe(select(fromSelectors.selectAll()));
   isLoading$ = this.store.pipe(select(fromSelectors.selectIsLoading()));
-  selectedId$ = this.store.pipe(select(fromSelectors.selectSelectedId()));
 
   loadAll(isBypassCache = false): Observable<MemoFile[]> {
     this.store
@@ -38,9 +37,5 @@ export class MemoFileFacade {
 
   delete(memoFileId: string): void {
     this.store.dispatch(fromActions.deleteOne({ id: memoFileId }));
-  }
-
-  select(memoFileId: string): void {
-    this.store.dispatch(fromActions.selectOne({ id: memoFileId }));
   }
 }

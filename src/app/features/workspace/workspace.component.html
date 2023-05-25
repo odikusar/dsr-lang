@@ -1,37 +1,12 @@
-<p>workspace 1234</p>
-
-<div class="row">
-  <div class="col-8">
-    <label>
-      <input
-        #newFile
-        style="display: none"
-        type="file"
-        accept=".csv"
-        (click)="newFile.value = null"
-        (change)="uploadMemoFile($event)"
-      />
-      <button (click)="newFile.click()">Add new Memo File</button>
-    </label>
-  </div>
+memoses - {{ (memoFiles$ | async)?.length }}
+<dsr-workspace-files
+  [memoFiles]="memoFiles$ | async"
+  [activeMemoFileId]="activeMemoFileId$ | async"
+></dsr-workspace-files>
+<dsr-workspace-pagination></dsr-workspace-pagination>
+<dsr-workspace-card></dsr-workspace-card>
+<div>
+  {{ (memoRows$ | async)?.length }}
 </div>
-
-<br />
-<br />
-{{ selectedMemoFileId$ | async }}
-<br />
-{{ (memoRows$ | async)?.length }}
-<br />
-
-<div *ngFor="let memoFile of memoFiles$ | async">
-  <span (click)="readMemoFile(memoFile)">{{ memoFile.name }}</span>
-  <input
-    type="file"
-    accept=".csv"
-    onclick="value = null"
-    (change)="uploadMemoFile($event, memoFile)"
-  />
-  <button (click)="deleteMemoFile(memoFile)">x</button>
-</div>
-
-<div class="test">3232</div>
+{{ activeMemoFileId$ | async }}
+<dsr-workspace-controls></dsr-workspace-controls>

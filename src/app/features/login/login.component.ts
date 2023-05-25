@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { DEMO_USER } from '@app/constants';
 import { Actions, ofType } from '@ngrx/effects';
 import { LoadingBarService } from '@ngx-loading-bar/core';
-import { AuthFacade } from '@state/auth';
-import * as fromActions from '@state/auth/auth.actions';
+import { UserFacade } from '@state/user';
+import * as fromActions from '@state/user/user.actions';
 import { Subject, take, takeUntil } from 'rxjs';
 
 interface LoginForm {
@@ -23,8 +23,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   private loader = this.loadingBar.useRef();
   private onDestroy$: Subject<void> = new Subject();
 
-  error$ = this.authFacade.error$;
-  isLoading$ = this.authFacade.isLoading$;
+  error$ = this.userFacade.error$;
+  isLoading$ = this.userFacade.isLoading$;
 
   form = new FormGroup<LoginForm>({
     email: new FormControl(DEMO_USER.EMAIL, {
@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   });
 
   constructor(
-    private authFacade: AuthFacade,
+    private userFacade: UserFacade,
     private loadingBar: LoadingBarService,
     private actions$: Actions,
     private router: Router
@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.form.valid) {
       const { email, password } = this.form.value;
 
-      this.authFacade.signIn({ email, password });
+      this.userFacade.signIn({ email, password });
     }
   }
 }

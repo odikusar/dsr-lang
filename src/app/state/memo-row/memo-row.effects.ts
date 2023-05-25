@@ -1,9 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { FireApiService } from '@app/services/fire-api.service';
+import { FLAG_INDEX, TRANSLATE_INDEX, WORD_INDEX } from '@app/constants';
 import { MemoRow } from '@models/index';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store, select } from '@ngrx/store';
+import * as fromMemoFileReducer from '@state/memo-file/memo-file.reducer';
+import * as fromMemoFileSelectors from '@state/memo-file/memo-file.selectors';
+import * as fromUserReducer from '@state/user/user.reducer';
+import * as fromUserSelectors from '@state/user/user.selectors';
 import { NgxCsvParser } from 'ngx-csv-parser';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
@@ -13,26 +17,30 @@ import * as fromActions from './memo-row.actions';
 export class MemoRowEffects {
   constructor(
     private actions$: Actions,
-    private fireApi: FireApiService,
-    private afAuth: AngularFireAuth,
     private http: HttpClient,
-    private ngxCsvParser: NgxCsvParser
+    private ngxCsvParser: NgxCsvParser,
+    private memoFileStore: Store<fromMemoFileReducer.MemoFileState>,
+    private authStore: Store<fromUserReducer.UserState>
   ) {}
 
   loadAll$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromActions.loadAll),
-      switchMap(({ payload }) =>
-        this.http.get(payload.url, { responseType: 'text' }).pipe(
+      switchMap(() => this.authStore.pipe(select(fromUserSelectors.selectActiveMemoFileId()))),
+      switchMap((activeMemoFileId) =>
+        this.memoFileStore.pipe(select(fromMemoFileSelectors.selectById(activeMemoFileId)))
+      ),
+      switchMap((memoFile) =>
+        this.http.get(memoFile.url, { responseType: 'text' }).pipe(
           map((memoData) => this.ngxCsvParser.csvStringToArray(memoData, ',')),
           map((items) =>
             items.map(
               (item, index) =>
                 ({
                   id: index + 1,
-                  word: item[0],
-                  translate: item[1],
-                  flag: item[2],
+                  word: item[WORD_INDEX],
+                  translate: item[TRANSLATE_INDEX],
+                  flag: item[FLAG_INDEX],
                 } as MemoRow)
             )
           ),

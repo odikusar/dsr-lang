@@ -11,10 +11,4 @@ export class MemoRowFacade {
 
   memoRows$ = this.store.pipe(select(fromSelectors.selectAll()));
   isLoading$ = this.store.pipe(select(fromSelectors.selectIsLoading()));
-
-  // loadAll(memoFile: MemoFile): Observable<MemoRow[]> {
-  //   this.store.dispatch(fromActions.loadAll({ payload: memoFile }));
-
-  //   return this.memoRows$;
-  // }
 }

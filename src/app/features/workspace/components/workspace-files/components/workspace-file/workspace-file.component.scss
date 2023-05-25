@@ -1,0 +1,33 @@
+.dsr-file {
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  white-space: nowrap;
+
+  &__body {
+    float: left;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  &__body-icon {
+    font-size: 76px;
+  }
+
+  &__actions {
+    float: left;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 4px;
+  }
+
+  &__action {
+    cursor: pointer;
+  }
+
+  &__name {
+    clear: both;
+    text-align: center;
+  }
+}

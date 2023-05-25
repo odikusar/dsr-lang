@@ -52,6 +52,12 @@ export class FireApiService {
     ).pipe(map(() => ({ ...memoFile } as MemoFile)));
   }
 
+  updateUser(user: Partial<User>): Observable<User> {
+    return from(this.afs.collection<Partial<User>>('users').doc(user.id).set(user)).pipe(
+      map(() => ({ ...user } as User))
+    );
+  }
+
   deleteMemoFile(memoFileId: string): Observable<void> {
     return from(this.afs.doc<User>(`memoFiles/${memoFileId}`).delete());
   }

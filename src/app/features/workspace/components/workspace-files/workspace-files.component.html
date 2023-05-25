@@ -1,0 +1,26 @@
+<div class="dsr-files">
+  <div class="dsr-files-add dsr-file-wrap">
+    <input
+      #newFile
+      class="dsr-hide"
+      type="file"
+      accept=".csv"
+      (click)="newFile.value = null"
+      (change)="uploadMemoFile($event)"
+    />
+    <span class="material-icons dsr-files-add__icon dsr-link-btn" (click)="newFile.click()">
+      post_add
+    </span>
+  </div>
+
+  <ng-container *ngFor="let memoFile of memoFiles">
+    <div class="dsr-file-wrap" [class.dsr-file-wrap_selected]="memoFile.id === activeMemoFileId">
+      <dsr-workspace-file
+        [memoFile]="memoFile"
+        (uploadMemoFile)="uploadMemoFile($event, memoFile)"
+        (selectMemoFile)="selectMemoFile($event)"
+        (deleteMemoFile)="deleteMemoFile($event)"
+      ></dsr-workspace-file>
+    </div>
+  </ng-container>
+</div>

@@ -1,31 +1,30 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Router } from '@angular/router';
 import { FireApiService } from '@app/services/fire-api.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import * as fromMemoRowActions from '@state/memo-row/memo-row.actions';
 import { from, of } from 'rxjs';
-import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
-import * as fromActions from './auth.actions';
-import { AuthFacade } from './auth.facade';
+import { catchError, map, switchMap, take, tap, withLatestFrom } from 'rxjs/operators';
+import * as fromActions from './user.actions';
+import { UserFacade } from './user.facade';
 
 @Injectable()
-export class AuthEffects {
+export class UserEffects {
   constructor(
     private actions$: Actions,
     private afAuth: AngularFireAuth,
     private fireApi: FireApiService,
-    private authFacade: AuthFacade,
-    private router: Router
+    private userFacade: UserFacade
   ) {}
 
-  init$ = createEffect(() =>
+  initAuth$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(fromActions.init),
+      ofType(fromActions.initAuth),
       switchMap(() => this.afAuth.authState.pipe(take(1))),
       switchMap((user) => {
         if (!!user) {
           return this.fireApi.getUser(user.uid).pipe(
-            tap((user) => this.authFacade.setUserId(user.id)),
+            tap((user) => this.userFacade.setUserId(user.id)),
             map((user) => fromActions.initAuthorized({ user })),
             catchError((error) => of(fromActions.initFail({ error })))
           );
@@ -48,7 +47,7 @@ export class AuthEffects {
         ).pipe(
           switchMap((signInState) =>
             this.fireApi.getUser(signInState.user.uid).pipe(
-              tap((user) => this.authFacade.setUserId(user.id)),
+              tap((user) => this.userFacade.setUserId(user.id)),
               map((user) => fromActions.signInSuccess({ user }))
             )
           ),
@@ -65,9 +64,21 @@ export class AuthEffects {
         from(this.afAuth.signOut()).pipe(
           take(1),
           map(() => fromActions.signOutSuccess()),
-          tap(() => this.authFacade.eraseUserId()),
+          tap(() => this.userFacade.eraseUserId()),
           catchError((error) => of(fromActions.signOutFail({ error })))
         )
+      )
+    )
+  );
+
+  setActiveMemoFile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.setActiveMemoFileId),
+      withLatestFrom(this.userFacade.user$),
+      switchMap(([{ id }, user]) =>
+        this.fireApi
+          .updateUser({ ...user, activeMemoFileId: id })
+          .pipe(map(() => fromMemoRowActions.loadAll()))
       )
     )
   );

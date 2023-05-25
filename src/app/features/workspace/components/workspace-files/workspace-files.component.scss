@@ -1,0 +1,23 @@
+.dsr-files {
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.dsr-files-add {
+  &__icon {
+    font-size: 82px;
+    cursor: pointer;
+  }
+}
+
+.dsr-file-wrap {
+  overflow: hidden;
+
+  &_selected {
+    border: 1px dashed;
+    border-radius: 8px;
+  }
+}

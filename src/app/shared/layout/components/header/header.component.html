@@ -4,7 +4,10 @@
     <div class="dsr-header-toolbar__theme">
       <mat-slide-toggle [checked]="isDarkTheme$ | async" (change)="toggleTheme($event)">
       </mat-slide-toggle>
-      <mat-icon class="mat-icon material-icons">bedtime</mat-icon>
+      <mat-icon class="mat-icon material-icons" *ngIf="!(isDarkTheme$ | async)">
+        brightness_4
+      </mat-icon>
+      <mat-icon class="mat-icon material-icons" *ngIf="isDarkTheme$ | async">brightness_5</mat-icon>
     </div>
 
     <ng-container *ngIf="isAuthorized">
@@ -12,7 +15,7 @@
         <span>{{ user.name }}</span>
         <mat-icon class="mat-icon material-icons">person</mat-icon>
       </div>
-      <div class="dsr-header-toolbar__logout dsr-link" (click)="onSignOut()">
+      <div class="dsr-header-toolbar__logout dsr-link-btn" (click)="onSignOut()">
         <span class="dsr-hide-for-small">logout</span>
         <mat-icon class="mat-icon material-icons">logout</mat-icon>
       </div>

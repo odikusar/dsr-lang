@@ -22,8 +22,17 @@ body {
   }
 }
 
-.dsr-link {
+.dsr-link-btn {
+  cursor: pointer;
+  opacity: 0.8;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+
   &:hover {
-    opacity: 0.7;
+    opacity: 1;
   }
+}
+
+.dsr-hide {
+  display: none;
 }

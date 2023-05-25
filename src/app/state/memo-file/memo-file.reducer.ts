@@ -30,10 +30,6 @@ const featureReducer = createReducer(
     })
   ),
   on(fromActions.loadAll, (state) => ({ ...state, error: null, isLoading: true })),
-  on(fromActions.selectOne, (state, { id }) => ({
-    ...state,
-    selectedId: id,
-  })),
   on(fromActions.create, fromActions.update, fromActions.deleteOne, (state) => ({
     ...state,
     error: null,

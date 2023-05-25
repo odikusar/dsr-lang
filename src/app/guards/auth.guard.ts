@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, CanLoad, Router } from '@angular/router';
+import { UserFacade } from '@state/user';
 import { filter, map, take, tap } from 'rxjs/operators';
-
-import { AuthFacade } from '@state/auth';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
-  constructor(private router: Router, private authFacade: AuthFacade) {}
+  constructor(private router: Router, private userFacade: UserFacade) {}
 
   canActivate() {
     return this.checkRoute();
@@ -23,7 +22,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   }
 
   private checkRoute() {
-    return this.authFacade.userState$.pipe(
+    return this.userFacade.userState$.pipe(
       filter((state) => state.isInitialized),
       take(1),
       tap((state) => {

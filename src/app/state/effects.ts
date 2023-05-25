@@ -1,5 +1,5 @@
-import { AuthEffects } from './auth';
 import { MemoFileEffects } from './memo-file';
 import { MemoRowEffects } from './memo-row';
+import { UserEffects } from './user';
 
-export const effects = [AuthEffects, MemoFileEffects, MemoRowEffects];
+export const effects = [UserEffects, MemoFileEffects, MemoRowEffects];

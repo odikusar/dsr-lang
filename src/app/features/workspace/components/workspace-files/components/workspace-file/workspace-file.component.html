@@ -1,0 +1,32 @@
+<div class="dsr-file">
+  <div class="dsr-file__body dsr-link-btn" [class.dsr-file_selected]="isSelected">
+    <span
+      class="material-icons dsr-file__body-icon dsr-link-btn"
+      (click)="selectMemoFile.emit(memoFile)"
+    >
+      description
+    </span>
+  </div>
+  <div class="dsr-file__actions">
+    <input
+      #editedFile
+      class="dsr-hide"
+      type="file"
+      accept=".csv"
+      (click)="editedFile.value = null"
+      (change)="uploadMemoFile.emit($event)"
+    />
+    <span class="material-icons dsr-file__action dsr-link-btn" (click)="editedFile.click()">
+      drive_file_rename_outline
+    </span>
+    <span
+      class="material-icons dsr-file__action dsr-link-btn"
+      (click)="deleteMemoFile.emit(memoFile)"
+    >
+      delete_forever
+    </span>
+  </div>
+</div>
+<div class="dsr-file__name">
+  {{ memoFile | fileName }}
+</div>

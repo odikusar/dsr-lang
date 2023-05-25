@@ -1,8 +1,8 @@
 import { User } from '@app/models';
 import { Action, createReducer, on } from '@ngrx/store';
-import * as fromActions from './auth.actions';
+import * as fromActions from './user.actions';
 
-export interface AuthState {
+export interface UserState {
   isAuthorized: boolean;
   isLoading: boolean;
   isInitialized: boolean;
@@ -10,7 +10,7 @@ export interface AuthState {
   error: Error;
 }
 
-export const initialState: AuthState = {
+export const initialState: UserState = {
   isLoading: false,
   isAuthorized: false,
   isInitialized: false,
@@ -20,7 +20,7 @@ export const initialState: AuthState = {
 
 const featureReducer = createReducer(
   initialState,
-  on(fromActions.init, fromActions.signOut, fromActions.signIn, (state) => ({
+  on(fromActions.initAuth, fromActions.signOut, fromActions.signIn, (state) => ({
     ...state,
     error: null,
     isLoading: true,
@@ -31,6 +31,12 @@ const featureReducer = createReducer(
     user: payload.user,
     isLoading: false,
     isInitialized: true,
+    error: null,
+  })),
+  on(fromActions.setActiveMemoFileId, (state, payload) => ({
+    ...state,
+    user: { ...state.user, activeMemoFileId: payload.id },
+    isLoading: true,
     error: null,
   })),
   on(fromActions.initUnauthorized, (state, payload) => ({
@@ -51,6 +57,6 @@ const featureReducer = createReducer(
   }))
 );
 
-export function reducer(state: AuthState | undefined, action: Action) {
+export function reducer(state: UserState | undefined, action: Action) {
   return featureReducer(state, action);
 }

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { UploadTaskSnapshot } from '@angular/fire/compat/storage/interfaces';
 import { MemoFile } from '@models/memo-file.model';
-import { AuthFacade } from '@state/auth';
 import { MemoFileFacade } from '@state/memo-file';
+import { UserFacade } from '@state/user';
 import { Observable, finalize, take } from 'rxjs';
 
 @Injectable({
@@ -14,45 +15,42 @@ export class FileService {
 
   constructor(
     private storage: AngularFireStorage,
-    private authFacade: AuthFacade,
+    private userFacade: UserFacade,
     private memoFileFacade: MemoFileFacade
   ) {}
 
-  upload(file: File, memoFile: MemoFile = null): void {
+  upload(file: File, memoFile: MemoFile = null): Observable<UploadTaskSnapshot> {
     const fileName = this.getRandomFileName(file.name);
     const filePath = this.getFilePath(fileName);
     const uploadTask = this.storage.upload(filePath, file);
 
-    uploadTask
-      .snapshotChanges()
-      .pipe(
-        finalize(() =>
-          this.storage
-            .ref(filePath)
-            .getDownloadURL()
-            .pipe(take(1))
-            .subscribe((downloadURL) => {
-              if (!!memoFile) {
-                this.memoFileFacade.update({
-                  ...memoFile,
-                  url: downloadURL,
-                  name: fileName,
-                  initialName: file.name,
-                });
+    return uploadTask.snapshotChanges().pipe(
+      finalize(() =>
+        this.storage
+          .ref(filePath)
+          .getDownloadURL()
+          .pipe(take(1))
+          .subscribe((downloadURL) => {
+            if (!!memoFile) {
+              this.memoFileFacade.update({
+                ...memoFile,
+                url: downloadURL,
+                name: fileName,
+                initialName: file.name,
+              });
 
-                this.erase(memoFile.name).pipe(take(1)).subscribe();
-              } else {
-                this.memoFileFacade.create({
-                  url: downloadURL,
-                  name: fileName,
-                  initialName: file.name,
-                  userId: this.authFacade.userId,
-                });
-              }
-            })
-        )
+              this.erase(memoFile.name).pipe(take(1)).subscribe();
+            } else {
+              this.memoFileFacade.create({
+                url: downloadURL,
+                name: fileName,
+                initialName: file.name,
+                userId: this.userFacade.userId,
+              });
+            }
+          })
       )
-      .subscribe();
+    );
   }
 
   delete(memoFile: MemoFile): void {
