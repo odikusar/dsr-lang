@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IS_DARK_THEME_BY_DEFAULT } from '@app/constants/core.const';
+import { IS_DARK_THEME_BY_DEFAULT } from '@app/constants/user.const';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({

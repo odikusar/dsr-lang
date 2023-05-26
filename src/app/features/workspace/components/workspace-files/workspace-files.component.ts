@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { FileService } from '@app/services/file.service';
+import { FileService } from '@app/services';
 import { MemoFile } from '@models/memo-file.model';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 import { UserFacade } from '@state/user';
@@ -42,17 +42,7 @@ export class WorkspaceFilesComponent implements OnInit {
     this.fileService.delete(memoFile);
   }
 
-  selectMemoFile(memoFile: MemoFile): void {
+  chooseMemoFile(memoFile: MemoFile): void {
     this.userFacade.setActiveMemoFileId(memoFile.id);
-    console.error(this.memoFiles); /////
-    // this.memoRowFacade.loadAll(memoFile);
-    // this.memoFileFacade.select(memoFile.id);
-
-    // this.http.get(memoFile.url, { responseType: 'text' }).subscribe((data) => {
-    //   console.log(data);
-    //   const test = this.ngxCsvParser.csvStringToArray(data, ',');
-    //   test.pop();
-    //   console.error(test[test.length - 1]);
-    // });
   }
 }

@@ -20,6 +20,11 @@ export class WorkspaceComponent implements OnInit {
   memoFiles$ = this.memoFileFacade.loadAll();
   activeMemoFileId$ = this.userFacade.activeMemoFileId$;
   memoRows$ = this.memoRowFacade.memoRows$;
+  selectedFreshMemoRows$ = this.memoRowFacade.selectedFreshMemoRows$;
+  randomMemoRow$ = this.memoRowFacade.randomMemoRow$;
+  isPreviousMemoRowShown$ = this.memoRowFacade.isPreviousMemoRowShown$;
+  memoRow$ = this.memoRowFacade.memoRow$;
+  isPreviousMemoRowReady$ = this.memoRowFacade.isPreviousMemoRowReady$;
 
   constructor(
     private memoFileFacade: MemoFileFacade,

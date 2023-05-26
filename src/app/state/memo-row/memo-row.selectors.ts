@@ -13,3 +13,11 @@ export const selectIsLoading = () =>
 
 export const selectIsAllLoaded = () =>
   createSelector(selectState(), (state: MemoRowState) => state.isAllLoaded);
+
+export const selectAllFreshInSelection = () =>
+  createSelector(selectAll(), (memoRows) =>
+    memoRows.filter((memoRow) => memoRow.isSelected && !memoRow.isShown)
+  );
+
+export const selectPreviousMemoRow = () =>
+  createSelector(selectState(), (state: MemoRowState) => state.entities[state.lastShownId]);

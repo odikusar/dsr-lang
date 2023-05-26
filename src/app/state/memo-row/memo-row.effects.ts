@@ -10,7 +10,7 @@ import * as fromUserReducer from '@state/user/user.reducer';
 import * as fromUserSelectors from '@state/user/user.selectors';
 import { NgxCsvParser } from 'ngx-csv-parser';
 import { of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, filter, map, switchMap } from 'rxjs/operators';
 import * as fromActions from './memo-row.actions';
 
 @Injectable()
@@ -30,6 +30,7 @@ export class MemoRowEffects {
       switchMap((activeMemoFileId) =>
         this.memoFileStore.pipe(select(fromMemoFileSelectors.selectById(activeMemoFileId)))
       ),
+      filter((memoFile) => !!memoFile),
       switchMap((memoFile) =>
         this.http.get(memoFile.url, { responseType: 'text' }).pipe(
           map((memoData) => this.ngxCsvParser.csvStringToArray(memoData, ',')),
@@ -37,10 +38,12 @@ export class MemoRowEffects {
             items.map(
               (item, index) =>
                 ({
-                  id: index + 1,
+                  id: index,
                   word: item[WORD_INDEX],
                   translate: item[TRANSLATE_INDEX],
                   flag: item[FLAG_INDEX],
+                  isShown: false,
+                  isSelected: false,
                 } as MemoRow)
             )
           ),

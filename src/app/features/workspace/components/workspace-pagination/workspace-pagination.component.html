@@ -1,1 +1,47 @@
-<p>workspace-pagination works!</p>
+<div>
+  {{ rowsTotalCount }}
+  {{ pagesCount }}
+</div>
+<br />
+<br />
+<br />
+
+<form [formGroup]="form">
+  <input type="checkbox" formControlName="checkAllPages" /> All Pages
+  <br />
+  <br />
+  <br />
+
+  <label formArrayName="pages" *ngFor="let order of form.controls.pages.controls; let i = index">
+    <input type="checkbox" [formControlName]="i" />
+    <!-- {{ordersData[i].name}} -->
+  </label>
+  <br />
+  <br />
+
+  <p>
+    <mat-form-field>
+      <input
+        type="number"
+        matInput
+        placeholder="from"
+        formControlName="from"
+        [min]="fromRowNumber$ | async"
+        [max]="toRowNumber$ | async"
+      />
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field>
+      <input
+        type="number"
+        matInput
+        placeholder="to"
+        formControlName="to"
+        [min]="fromRowNumber$ | async"
+        [max]="toRowNumber$ | async"
+      />
+    </mat-form-field>
+  </p>
+</form>

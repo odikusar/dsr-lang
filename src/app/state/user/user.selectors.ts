@@ -15,6 +15,6 @@ export const selectIsInitialized = () =>
 export const selectUser = () => createSelector(selectState(), (state: UserState) => state.user);
 
 export const selectActiveMemoFileId = () =>
-  createSelector(selectState(), (state: UserState) => state.user.activeMemoFileId);
+  createSelector(selectState(), (state: UserState) => state.user?.activeMemoFileId);
 
 export const selectError = () => createSelector(selectState(), (state: UserState) => state.error);

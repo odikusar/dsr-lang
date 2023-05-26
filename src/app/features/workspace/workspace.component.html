@@ -1,12 +1,15 @@
-memoses - {{ (memoFiles$ | async)?.length }}
 <dsr-workspace-files
   [memoFiles]="memoFiles$ | async"
   [activeMemoFileId]="activeMemoFileId$ | async"
 ></dsr-workspace-files>
-<dsr-workspace-pagination></dsr-workspace-pagination>
-<dsr-workspace-card></dsr-workspace-card>
+<dsr-workspace-pagination [rowsTotalCount]="(memoRows$ | async)?.length"></dsr-workspace-pagination>
+<dsr-workspace-card [memoRow]="memoRow$ | async"></dsr-workspace-card>
 <div>
   {{ (memoRows$ | async)?.length }}
 </div>
 {{ activeMemoFileId$ | async }}
-<dsr-workspace-controls></dsr-workspace-controls>
+<dsr-workspace-controls
+  [memoRow]="memoRow$ | async"
+  [isPreviousMemoRowReady]="isPreviousMemoRowReady$ | async"
+></dsr-workspace-controls>
+{{ (memoFiles$ | async)?.length }}

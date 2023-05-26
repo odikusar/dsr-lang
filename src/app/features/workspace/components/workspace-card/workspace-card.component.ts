@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { MemoRow } from '@models/index';
 
 @Component({
   selector: 'dsr-workspace-card',
@@ -7,6 +8,8 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WorkspaceCardComponent implements OnInit {
+  @Input() memoRow: MemoRow;
+
   constructor() {}
 
   ngOnInit(): void {}

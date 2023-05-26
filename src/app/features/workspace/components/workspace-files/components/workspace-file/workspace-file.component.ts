@@ -12,6 +12,6 @@ export class WorkspaceFileComponent {
   @Input() isSelected: boolean = false;
 
   @Output() uploadMemoFile = new EventEmitter<Event>();
-  @Output() selectMemoFile = new EventEmitter<MemoFile>();
+  @Output() chooseMemoFile = new EventEmitter<MemoFile>();
   @Output() deleteMemoFile = new EventEmitter<MemoFile>();
 }

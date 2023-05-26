@@ -3,4 +3,6 @@ export interface MemoRow {
   word: string;
   translate: string;
   flag: string;
+  isShown: boolean;
+  isSelected: boolean;
 }

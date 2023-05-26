@@ -7,5 +7,8 @@ export const loadAllSuccess = createAction(
   '[MemoRow] Load All Success',
   props<{ payload: MemoRow[] }>()
 );
-
 export const loadAllFail = createAction('[MemoRow] Load All Fail', props<{ error: Error }>());
+
+export const setSelection = createAction('[MemoRow] Set Selection', props<{ payload: number[] }>());
+
+export const setShown = createAction('[MemoRow] Set Shown', props<{ id: number }>());

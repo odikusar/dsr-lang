@@ -5,7 +5,7 @@ import { LoadingBarService } from '@ngx-loading-bar/core';
 import { UserFacade } from '@state/user';
 import * as fromUserActions from '@state/user/user.actions';
 import { filter, take } from 'rxjs';
-import { ThemeService } from './services/theme.service';
+import { ThemeService } from './services';
 
 @Component({
   selector: 'app-root',

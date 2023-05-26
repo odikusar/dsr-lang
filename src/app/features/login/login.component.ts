@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DEMO_USER } from '@app/constants';
 import { Actions, ofType } from '@ngrx/effects';
@@ -26,20 +26,17 @@ export class LoginComponent implements OnInit, OnDestroy {
   error$ = this.userFacade.error$;
   isLoading$ = this.userFacade.isLoading$;
 
-  form = new FormGroup<LoginForm>({
-    email: new FormControl(DEMO_USER.EMAIL, {
-      validators: [Validators.required, Validators.email],
-    }),
-    password: new FormControl(DEMO_USER.PASSWORD, {
-      validators: [Validators.required],
-    }),
+  form = this.fb.group<LoginForm>({
+    email: this.fb.control(DEMO_USER.EMAIL, [Validators.required, Validators.email]),
+    password: this.fb.control(DEMO_USER.PASSWORD, [Validators.required]),
   });
 
   constructor(
     private userFacade: UserFacade,
     private loadingBar: LoadingBarService,
     private actions$: Actions,
-    private router: Router
+    private router: Router,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
