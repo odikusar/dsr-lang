@@ -1,5 +1,5 @@
 <div class="dsr-files">
-  <div class="dsr-files-add dsr-file-wrap">
+  <div class="dsr-files-add dsr-file-wrap dsr-hide-for-small">
     <input
       #newFile
       class="dsr-hide"
@@ -14,9 +14,10 @@
   </div>
 
   <ng-container *ngFor="let memoFile of memoFiles">
-    <div class="dsr-file-wrap" [class.dsr-file-wrap_selected]="memoFile.id === activeMemoFileId">
+    <div class="dsr-file-wrap" [class.dsr-file-wrap_active]="memoFile.id === activeMemoFileId">
       <dsr-workspace-file
         [memoFile]="memoFile"
+        [isActive]="memoFile.id === activeMemoFileId"
         (uploadMemoFile)="uploadMemoFile($event, memoFile)"
         (chooseMemoFile)="chooseMemoFile($event)"
         (deleteMemoFile)="deleteMemoFile($event)"

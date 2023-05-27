@@ -10,7 +10,7 @@ import * as fromUserReducer from '@state/user/user.reducer';
 import * as fromUserSelectors from '@state/user/user.selectors';
 import { NgxCsvParser } from 'ngx-csv-parser';
 import { of } from 'rxjs';
-import { catchError, filter, map, switchMap } from 'rxjs/operators';
+import { catchError, filter, map, switchMap, take } from 'rxjs/operators';
 import * as fromActions from './memo-row.actions';
 
 @Injectable()
@@ -26,9 +26,11 @@ export class MemoRowEffects {
   loadAll$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromActions.loadAll),
-      switchMap(() => this.authStore.pipe(select(fromUserSelectors.selectActiveMemoFileId()))),
+      switchMap(() =>
+        this.authStore.pipe(take(1), select(fromUserSelectors.selectActiveMemoFileId()))
+      ),
       switchMap((activeMemoFileId) =>
-        this.memoFileStore.pipe(select(fromMemoFileSelectors.selectById(activeMemoFileId)))
+        this.memoFileStore.pipe(take(1), select(fromMemoFileSelectors.selectById(activeMemoFileId)))
       ),
       filter((memoFile) => !!memoFile),
       switchMap((memoFile) =>

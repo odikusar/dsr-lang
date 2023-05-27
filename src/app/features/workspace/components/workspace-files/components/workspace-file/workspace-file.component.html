@@ -1,9 +1,6 @@
 <div class="dsr-file">
-  <div class="dsr-file__body dsr-link-btn" [class.dsr-file_selected]="isSelected">
-    <span
-      class="material-icons dsr-file__body-icon dsr-link-btn"
-      (click)="chooseMemoFile.emit(memoFile)"
-    >
+  <div class="dsr-file__body dsr-link-btn" [class.dsr-file__body_active]="isActive">
+    <span class="material-icons dsr-file__body-icon" (click)="chooseMemoFile.emit(memoFile)">
       description
     </span>
   </div>

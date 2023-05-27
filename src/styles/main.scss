@@ -1,11 +1,13 @@
 @import './mixins';
 @import './variables';
 @import './theme';
+@import 'ngx-toastr/toastr';
 
 html,
 body {
   height: 100%;
 }
+
 body {
   margin: 0;
 }
@@ -35,4 +37,9 @@ body {
 
 .dsr-hide {
   display: none;
+}
+
+hr {
+  opacity: 0.7;
+  margin: 15px;
 }

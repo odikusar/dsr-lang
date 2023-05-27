@@ -1,6 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { DICTIONARY_LINK, EXPLANATION_LINK } from '@app/constants';
 import { MemoRow } from '@models/memo-row.model';
 import { MemoRowFacade } from '@state/memo-row';
+import { UserFacade } from '@state/user';
+import { ToastrService } from 'ngx-toastr';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'dsr-workspace-controls',
@@ -8,19 +13,69 @@ import { MemoRowFacade } from '@state/memo-row';
   styleUrls: ['./workspace-controls.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WorkspaceControlsComponent implements OnInit {
+export class WorkspaceControlsComponent implements OnInit, OnDestroy {
   @Input() memoRow: MemoRow;
   @Input() isPreviousMemoRowReady: boolean;
+  @Input() isTranslationByDefault: boolean;
+  @Input() rowsLeftCount: number;
 
-  constructor(private memoRowFacade: MemoRowFacade) {}
+  private onDestroy$: Subject<void> = new Subject();
 
-  ngOnInit(): void {}
+  isTranslationByDefaultCtrl = new FormControl<boolean>(null);
+
+  constructor(
+    private memoRowFacade: MemoRowFacade,
+    private userFacade: UserFacade,
+    private toastr: ToastrService
+  ) {}
+
+  ngOnInit(): void {
+    this.isTranslationByDefaultCtrl.setValue(this.isTranslationByDefault);
+
+    this.isTranslationByDefaultCtrl.valueChanges
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((value) => {
+        this.userFacade.updateSettings({ isTranslationByDefault: value });
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+  }
 
   showNext(): void {
+    this.memoRowFacade.isAnswerDisplayed$.next(false);
     this.memoRowFacade.setShown(this.memoRow.id);
   }
 
   showPrevious(): void {
     this.memoRowFacade.showPrevious();
+  }
+
+  showAnswer(): void {
+    this.memoRowFacade.isAnswerDisplayed$.next(true);
+    if (this.rowsLeftCount == 0) {
+      this.toastr.success("Congrats that's all");
+    }
+  }
+
+  reset(): void {
+    this.memoRowFacade.isAnswerDisplayed$.next(false);
+    this.memoRowFacade.reset();
+  }
+
+  openDictionary(): void {
+    this.openInNewTab(`${DICTIONARY_LINK}${this.memoRow.word}`);
+  }
+  openExplanation(): void {
+    this.openInNewTab(`${EXPLANATION_LINK}${this.memoRow.word}`);
+  }
+
+  private openInNewTab(href: string): void {
+    Object.assign(document.createElement('a'), {
+      target: '_blank',
+      href,
+    }).click();
   }
 }

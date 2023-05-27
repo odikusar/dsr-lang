@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AuthCredentials } from '@app/models';
+import { AuthCredentials, User } from '@app/models';
 import { Store, select } from '@ngrx/store';
 import * as fromActions from '@state/user/user.actions';
 import * as fromReducer from '@state/user/user.reducer';
@@ -17,6 +17,8 @@ export class UserFacade {
   isInitialized$ = this.store.pipe(select(fromSelectors.selectIsInitialized()));
   user$ = this.store.pipe(select(fromSelectors.selectUser()));
   activeMemoFileId$ = this.store.pipe(select(fromSelectors.selectActiveMemoFileId()));
+  isTranslationByDefault$ = this.store.pipe(select(fromSelectors.selectIsTranslationByDefault()));
+  isDemo$ = this.store.pipe(select(fromSelectors.selectIsDemo()));
   error$ = this.store.pipe(select(fromSelectors.selectError()));
   userId: string = null;
 
@@ -42,5 +44,9 @@ export class UserFacade {
 
   setActiveMemoFileId(memoFileId: string): void {
     this.store.dispatch(fromActions.setActiveMemoFileId({ id: memoFileId }));
+  }
+
+  updateSettings(changes: Partial<User>): void {
+    this.store.dispatch(fromActions.updateSettings({ payload: { id: this.userId, changes } }));
   }
 }

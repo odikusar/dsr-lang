@@ -39,6 +39,11 @@ const featureReducer = createReducer(
     isLoading: true,
     error: null,
   })),
+  on(fromActions.updateSettings, fromActions.updateSettingsSuccess, (state, { payload }) => ({
+    ...state,
+    user: { ...state.user, ...payload.changes },
+    error: null,
+  })),
   on(fromActions.initUnauthorized, (state, payload) => ({
     ...state,
     error: null,

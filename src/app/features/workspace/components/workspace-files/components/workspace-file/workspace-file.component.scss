@@ -1,3 +1,5 @@
+@import './mixins';
+
 .dsr-file {
   overflow: hidden;
   display: flex;
@@ -8,6 +10,11 @@
     float: left;
     cursor: pointer;
     overflow: hidden;
+
+    &_active {
+      cursor: default;
+      pointer-events: none;
+    }
   }
 
   &__body-icon {
@@ -29,5 +36,11 @@
   &__name {
     clear: both;
     text-align: center;
+  }
+}
+
+@include small-screens {
+  .dsr-file__body-icon {
+    font-size: 68px;
   }
 }

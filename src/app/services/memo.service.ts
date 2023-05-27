@@ -67,7 +67,7 @@ export class MemoService {
 
       randomMemoRow = memoRows.find((memoRow) => memoRow.id === randomMemoRowId);
     } while (!randomMemoRow);
-    console.error(randomMemoRowId);
+
     return randomMemoRow;
   }
 }

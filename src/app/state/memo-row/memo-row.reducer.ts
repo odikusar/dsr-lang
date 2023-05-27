@@ -31,18 +31,27 @@ const featureReducer = createReducer(
     })
   ),
   on(fromActions.setSelection, (state, { payload }) =>
-    adapter.setAll(
-      Object.keys(state.entities).map((item) => ({
-        ...state.entities[item],
-        isShown: false,
-        isSelected: payload.indexOf(Number(item)) !== -1,
+    adapter.updateMany(
+      Object.keys(state.entities).map((id) => ({
+        id,
+        changes: {
+          ...state.entities[id],
+          isShown: false,
+          isSelected: payload.indexOf(Number(id)) !== -1,
+        },
       })),
-      {
-        ...state,
-        isLoading: false,
-        isAllLoaded: true,
-        error: null,
-      }
+      state
+    )
+  ),
+  on(fromActions.reset, (state) =>
+    adapter.updateMany(
+      Object.keys(state.entities).map((id) => ({
+        id,
+        changes: {
+          isShown: false,
+        },
+      })),
+      state
     )
   ),
   on(fromActions.setShown, (state, { id }) =>

@@ -1,6 +1,32 @@
-<br />
-<button (click)="showPrevious()" [disabled]="!isPreviousMemoRowReady">Previous</button>
-<br />
-<br />
-<button (click)="showNext()">Next</button>
-<br />
+<!-- <input type="checkbox" formControlName="checkAllPages" /> All Pages showTranslation -->
+<div class="dsr-control-row">
+  <button
+    class="dsr-link-btn"
+    mat-raised-button
+    (click)="showPrevious()"
+    [disabled]="!isPreviousMemoRowReady"
+  >
+    Previous
+  </button>
+  <button class="dsr-link-btn" mat-raised-button (click)="showAnswer()">Show Answer</button>
+
+  <button
+    class="dsr-link-btn dsr-next-btn"
+    mat-raised-button
+    (click)="showNext()"
+    [disabled]="!rowsLeftCount"
+  >
+    Next Word
+  </button>
+</div>
+<div class="dsr-control-row">
+  <mat-checkbox [formControl]="isTranslationByDefaultCtrl">Translation by default</mat-checkbox>
+  <button class="dsr-link-btn" mat-raised-button (click)="reset()">Repeat Again</button>
+</div>
+
+<div class="dsr-control-row">
+  <button class="dsr-link-btn" mat-raised-button (click)="openExplanation()">
+    Open Explanation
+  </button>
+  <button class="dsr-link-btn" mat-raised-button (click)="openDictionary()">Open Dictionary</button>
+</div>

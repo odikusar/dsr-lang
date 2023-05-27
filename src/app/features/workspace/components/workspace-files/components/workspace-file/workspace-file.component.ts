@@ -9,7 +9,7 @@ import { MemoFile } from '@models/memo-file.model';
 })
 export class WorkspaceFileComponent {
   @Input() memoFile: MemoFile;
-  @Input() isSelected: boolean = false;
+  @Input() isActive: boolean = false;
 
   @Output() uploadMemoFile = new EventEmitter<Event>();
   @Output() chooseMemoFile = new EventEmitter<MemoFile>();

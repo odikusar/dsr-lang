@@ -15,6 +15,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { environment } from '@src/environments/environment';
 import { StateModule } from '@state/state.module';
+import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutModule } from './shared/layout/layout.module';
@@ -33,6 +34,7 @@ import { LayoutModule } from './shared/layout/layout.module';
     LayoutModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot(),
     LoadingBarModule,
     MatProgressSpinnerModule,
     ServiceWorkerModule.register('ngsw-worker.js', {

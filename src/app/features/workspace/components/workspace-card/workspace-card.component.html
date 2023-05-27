@@ -1,3 +1,15 @@
-<p>=========</p>
-{{ memoRow?.word }} | {{ memoRow?.translate }}
-<p>=========</p>
+<div class="dsr-card-wrapper">
+  <div class="dsr-card">
+    <div class="dsr-card-word">
+      <span *ngIf="!isTranslationByDefault || isAnswerDisplayed" @fadeIn @fadeOut>
+        {{ memoRow?.word }}
+      </span>
+    </div>
+    <hr />
+    <div class="dsr-card-word">
+      <span *ngIf="isTranslationByDefault || isAnswerDisplayed" @fadeIn @fadeOut>
+        {{ memoRow?.translate }}
+      </span>
+    </div>
+  </div>
+</div>

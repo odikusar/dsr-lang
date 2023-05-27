@@ -16,6 +16,7 @@ export class MemoRowFacade {
   selectedFreshMemoRows$ = this.store.pipe(select(fromSelectors.selectAllFreshInSelection()));
   previousMemoRow$ = this.store.pipe(select(fromSelectors.selectPreviousMemoRow()));
   isPreviousMemoRowShown$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  isAnswerDisplayed$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   isPreviousMemoRowReady$ = combineLatest(
     [this.previousMemoRow$, this.isPreviousMemoRowShown$],
     (previousMemoRow, isPreviousMemoRowShown) => !!previousMemoRow && !isPreviousMemoRowShown
@@ -31,8 +32,16 @@ export class MemoRowFacade {
     )
   );
 
+  rowsLeftCount$ = this.selectedFreshMemoRows$.pipe(
+    map((memoRows) => (memoRows?.length > 0 ? memoRows?.length - 1 : 0))
+  );
+
   setSelection(selectedRowsIndexes: number[]): void {
     this.store.dispatch(fromActions.setSelection({ payload: selectedRowsIndexes }));
+  }
+
+  reset(): void {
+    this.store.dispatch(fromActions.reset());
   }
 
   setShown(id: number): void {

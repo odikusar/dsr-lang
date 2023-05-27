@@ -3,14 +3,15 @@ import {
   Component,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
 } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { ROWS_PER_PAGE, START_ROW_INDEX } from '@app/constants';
+import { DEDUCTION_COEFFICIENT, ROWS_PER_PAGE, START_ROW_INDEX } from '@app/constants';
 import { MemoService } from '@app/services/memo.service';
 import { MemoRowFacade } from '@state/memo-row';
-import { BehaviorSubject, debounceTime, distinctUntilChanged } from 'rxjs';
+import { BehaviorSubject, Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
 
 interface PaginationForm {
   from: FormControl<number>;
@@ -25,12 +26,16 @@ interface PaginationForm {
   styleUrls: ['./workspace-pagination.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WorkspacePaginationComponent implements OnInit, OnChanges {
+export class WorkspacePaginationComponent implements OnInit, OnChanges, OnDestroy {
   @Input() rowsTotalCount: number;
+  @Input() rowsLeftCount: number;
+  @Input() currentMemoRowId: number;
 
+  DEDUCTION_COEFFICIENT = DEDUCTION_COEFFICIENT;
   fromRowNumber$: BehaviorSubject<number> = new BehaviorSubject(1);
   toRowNumber$: BehaviorSubject<number> = new BehaviorSubject(1);
 
+  private onDestroy$: Subject<void> = new Subject();
   private readonly numbersValidation = Validators.pattern('^[0-9]*$');
 
   form = this.fb.group<PaginationForm>({
@@ -48,7 +53,7 @@ export class WorkspacePaginationComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.form.valueChanges
-      .pipe(debounceTime(100), distinctUntilChanged())
+      .pipe(debounceTime(100), distinctUntilChanged(), takeUntil(this.onDestroy$))
       .subscribe((formValue) => {
         const selectedRowsIndexes = this.memoService.getSelectedRowsIndexes(
           this.getSelectedPages(formValue.pages),
@@ -60,11 +65,13 @@ export class WorkspacePaginationComponent implements OnInit, OnChanges {
         this.memoRowFacade.setSelection(selectedRowsIndexes);
       });
 
-    this.form.controls.checkAllPages.valueChanges.subscribe((checkAllPages) => {
-      this.form.controls.pages.patchValue(new Array(this.pagesCount).fill(checkAllPages));
-    });
+    this.form.controls.checkAllPages.valueChanges
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((checkAllPages) => {
+        this.form.controls.pages.patchValue(new Array(this.pagesCount).fill(checkAllPages));
+      });
 
-    this.form.controls.pages.valueChanges.subscribe((pages) => {
+    this.form.controls.pages.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((pages) => {
       const isAllPagesChecked = pages.every((item) => item === true);
 
       this.form.controls.checkAllPages.patchValue(isAllPagesChecked, {
@@ -104,14 +111,21 @@ export class WorkspacePaginationComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.form.controls.pages.clear({ emitEvent: false });
+    if (!!changes['rowsTotalCount']) {
+      this.form.controls.pages.clear({ emitEvent: false });
 
-    if (this.rowsTotalCount) {
-      for (let i = 0; i < this.pagesCount; i++) {
-        this.form.controls.pages.push(this.fb.control<boolean>(true), { emitEvent: false });
+      if (this.rowsTotalCount > 0) {
+        for (let i = 0; i < this.pagesCount; i++) {
+          this.form.controls.pages.push(this.fb.control<boolean>(true), { emitEvent: false });
+        }
+        this.form.controls.pages.updateValueAndValidity();
       }
-      this.form.controls.pages.updateValueAndValidity();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
   }
 
   get lastTotalRowIndex(): number {
@@ -124,5 +138,17 @@ export class WorkspacePaginationComponent implements OnInit, OnChanges {
 
   private getSelectedPages(checkedPages: boolean[]): number[] {
     return checkedPages.reduce((out, value, index) => (!!value ? out.concat(index) : out), []);
+  }
+
+  addUpRows() {
+    this.form.patchValue({
+      from: this.form.controls.from.value + DEDUCTION_COEFFICIENT,
+    });
+  }
+
+  deductRows() {
+    this.form.patchValue({
+      to: this.form.controls.to.value - DEDUCTION_COEFFICIENT,
+    });
   }
 }

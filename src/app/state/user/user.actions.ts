@@ -1,4 +1,5 @@
 import { AuthCredentials, User } from '@app/models';
+import { Update } from '@ngrx/entity';
 import { createAction, props } from '@ngrx/store';
 
 export const initAuth = createAction('[User] Init Auth');
@@ -24,4 +25,19 @@ export const signOutFail = createAction('[User] Sign Out Fail', props<{ error: E
 export const setActiveMemoFileId = createAction(
   '[User] Set Active Memo File',
   props<{ id: string }>()
+);
+
+export const updateSettings = createAction(
+  '[User] Update Settings',
+  props<{ payload: Update<User> }>()
+);
+
+export const updateSettingsSuccess = createAction(
+  '[User] Update Settings Success',
+  props<{ payload: Update<User> }>()
+);
+
+export const updateSettingsFail = createAction(
+  '[User] Update Settings Fail',
+  props<{ error: Error }>()
 );

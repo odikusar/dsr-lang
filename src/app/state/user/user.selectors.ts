@@ -17,4 +17,10 @@ export const selectUser = () => createSelector(selectState(), (state: UserState)
 export const selectActiveMemoFileId = () =>
   createSelector(selectState(), (state: UserState) => state.user?.activeMemoFileId);
 
+export const selectIsTranslationByDefault = () =>
+  createSelector(selectState(), (state: UserState) => state.user?.isTranslationByDefault);
+
+export const selectIsDemo = () =>
+  createSelector(selectState(), (state: UserState) => state.user?.isDemo);
+
 export const selectError = () => createSelector(selectState(), (state: UserState) => state.error);

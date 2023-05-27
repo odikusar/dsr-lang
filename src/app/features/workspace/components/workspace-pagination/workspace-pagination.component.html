@@ -1,26 +1,31 @@
-<div>
-  {{ rowsTotalCount }}
-  {{ pagesCount }}
-</div>
-<br />
-<br />
-<br />
-
 <form [formGroup]="form">
-  <input type="checkbox" formControlName="checkAllPages" /> All Pages
-  <br />
-  <br />
-  <br />
-
-  <label formArrayName="pages" *ngFor="let order of form.controls.pages.controls; let i = index">
-    <input type="checkbox" [formControlName]="i" />
-    <!-- {{ordersData[i].name}} -->
-  </label>
-  <br />
-  <br />
-
-  <p>
-    <mat-form-field>
+  <div class="dsr-pages-top-panel">
+    <div>words left:</div>
+    <div class="dsr-pages-counter dsr-pages-counter_first">
+      {{ rowsLeftCount || '' }}
+    </div>
+    <div>current index:</div>
+    <div class="dsr-pages-counter">{{ currentMemoRowId + 1 }}</div>
+  </div>
+  <div class="dsr-pages-list">
+    <div class="dsr-page-item dsr-all-pages">
+      <div class="dsr-page-item__number">...</div>
+      <mat-checkbox formControlName="checkAllPages"></mat-checkbox>
+    </div>
+    <div
+      class="dsr-page-item"
+      formArrayName="pages"
+      *ngFor="let order of form.controls.pages.controls; let i = index"
+    >
+      <div class="dsr-page-item__number">{{ i + 1 }}</div>
+      <mat-checkbox [formControlName]="i"></mat-checkbox>
+    </div>
+  </div>
+  <div class="dsr-bounds">
+    <button class="dsr-link-btn" mat-raised-button (click)="addUpRows()">
+      + {{ DEDUCTION_COEFFICIENT }}
+    </button>
+    <mat-form-field class="drs-bound-input">
       <input
         type="number"
         matInput
@@ -30,10 +35,8 @@
         [max]="toRowNumber$ | async"
       />
     </mat-form-field>
-  </p>
 
-  <p>
-    <mat-form-field>
+    <mat-form-field class="drs-bound-input">
       <input
         type="number"
         matInput
@@ -43,5 +46,13 @@
         [max]="toRowNumber$ | async"
       />
     </mat-form-field>
-  </p>
+    <button
+      class="dsr-link-btn"
+      mat-raised-button
+      (click)="deductRows()"
+      [disabled]="DEDUCTION_COEFFICIENT >= rowsLeftCount"
+    >
+      - {{ DEDUCTION_COEFFICIENT }}
+    </button>
+  </div>
 </form>

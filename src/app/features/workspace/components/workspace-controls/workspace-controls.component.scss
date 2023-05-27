@@ -1,0 +1,19 @@
+.dsr-link-btn {
+  margin: 5px;
+}
+
+.dsr-next-btn {
+  min-width: 100px;
+}
+
+.dsr-control-row {
+  margin-top: 15px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+
+  .mat-checkbox {
+    margin-right: 10px;
+  }
+}

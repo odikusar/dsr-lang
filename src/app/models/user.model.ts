@@ -3,4 +3,6 @@ export interface User {
   email: string;
   name: string;
   activeMemoFileId: string;
+  isTranslationByDefault: boolean;
+  isDemo: boolean;
 }

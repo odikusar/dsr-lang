@@ -77,8 +77,21 @@ export class UserEffects {
       withLatestFrom(this.userFacade.user$),
       switchMap(([{ id }, user]) =>
         this.fireApi
-          .updateUser({ ...user, activeMemoFileId: id })
+          .updateUser(user.id, { ...user, activeMemoFileId: id })
           .pipe(map(() => fromMemoRowActions.loadAll()))
+      )
+    )
+  );
+
+  updateSettings$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(fromActions.updateSettings),
+      withLatestFrom(this.userFacade.user$),
+      switchMap(([{ payload }, user]) =>
+        this.fireApi.updateUser(user.id, { ...user, ...payload.changes }).pipe(
+          map(() => fromActions.updateSettingsSuccess({ payload })),
+          catchError((error) => of(fromActions.updateSettingsFail({ error })))
+        )
       )
     )
   );

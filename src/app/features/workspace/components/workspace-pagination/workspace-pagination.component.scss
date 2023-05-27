@@ -1,0 +1,50 @@
+.dsr-page-item {
+  float: left;
+  margin: 5px 12px 5px 0;
+  text-align: center;
+
+  &__number {
+    opacity: 0.6;
+  }
+}
+
+.dsr-all-pages {
+  margin-right: 20px;
+}
+
+.dsr-pages-list {
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.drs-bound-input {
+  width: 70px;
+  margin: 0 10px;
+}
+
+.dsr-bounds {
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+}
+.dsr-pages-top-panel {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+  margin-top: 15px;
+}
+
+.dsr-pages-counter {
+  border: 1px dotted;
+  text-align: center;
+  margin: 0 5px;
+  border-radius: 5px;
+  min-width: 40px;
+
+  &_first {
+    margin-right: 10px;
+  }
+}
