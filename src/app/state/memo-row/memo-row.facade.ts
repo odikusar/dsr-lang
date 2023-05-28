@@ -36,8 +36,8 @@ export class MemoRowFacade {
     map((memoRows) => (memoRows?.length > 0 ? memoRows?.length - 1 : 0))
   );
 
-  setSelection(selectedRowsIndexes: number[]): void {
-    this.store.dispatch(fromActions.setSelection({ payload: selectedRowsIndexes }));
+  setSelection(selectedRowsIndexes: number[], withFlag: boolean): void {
+    this.store.dispatch(fromActions.setSelection({ payload: { selectedRowsIndexes, withFlag } }));
   }
 
   reset(): void {

@@ -4,23 +4,27 @@ import { FLAG_INDEX, TRANSLATE_INDEX, WORD_INDEX } from '@app/constants';
 import { MemoRow } from '@models/index';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
+import { LoadingBarService } from '@ngx-loading-bar/core';
 import * as fromMemoFileReducer from '@state/memo-file/memo-file.reducer';
 import * as fromMemoFileSelectors from '@state/memo-file/memo-file.selectors';
 import * as fromUserReducer from '@state/user/user.reducer';
 import * as fromUserSelectors from '@state/user/user.selectors';
 import { NgxCsvParser } from 'ngx-csv-parser';
 import { of } from 'rxjs';
-import { catchError, filter, map, switchMap, take } from 'rxjs/operators';
+import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';
 import * as fromActions from './memo-row.actions';
 
 @Injectable()
 export class MemoRowEffects {
+  private loader = this.loadingBar.useRef();
+
   constructor(
     private actions$: Actions,
     private http: HttpClient,
     private ngxCsvParser: NgxCsvParser,
     private memoFileStore: Store<fromMemoFileReducer.MemoFileState>,
-    private authStore: Store<fromUserReducer.UserState>
+    private authStore: Store<fromUserReducer.UserState>,
+    private loadingBar: LoadingBarService
   ) {}
 
   loadAll$ = createEffect(() =>
@@ -33,6 +37,7 @@ export class MemoRowEffects {
         this.memoFileStore.pipe(take(1), select(fromMemoFileSelectors.selectById(activeMemoFileId)))
       ),
       filter((memoFile) => !!memoFile),
+      tap(() => this.loader.start()),
       switchMap((memoFile) =>
         this.http.get(memoFile.url, { responseType: 'text' }).pipe(
           map((memoData) => this.ngxCsvParser.csvStringToArray(memoData, ',')),
@@ -58,6 +63,7 @@ export class MemoRowEffects {
 
             return memoRows as MemoRow[];
           }),
+          tap(() => this.loader.complete()),
           map((memoRows) => fromActions.loadAllSuccess({ payload: memoRows })),
           catchError((error) => of(fromActions.loadAllFail({ error })))
         )

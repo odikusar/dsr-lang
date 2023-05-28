@@ -16,14 +16,24 @@
     margin: 0 auto;
     color: $light-text;
 
-    > * {
+    > *,
+    a {
       display: flex;
       align-items: center;
       gap: 6px;
+      color: $light-text;
     }
   }
 
-  &__theme {
+  &__side-block {
     margin-left: auto;
   }
+}
+
+.dsr-header-active {
+  display: none !important;
+}
+
+.dsr-header-title {
+  opacity: 0.8;
 }

@@ -1,6 +1,41 @@
 <mat-toolbar class="dsr-header-toolbar mat-toolbar">
   <div class="dsr-header-toolbar__content">
-    <div class="dsr-header-toolbar__title dsr-hide-for-small">Dikusar Language Memo App.</div>
+    <div class="dsr-header-toolbar__title dsr-hide-for-small dsr-header-title">
+      Dikusar Language Memo App.
+    </div>
+
+    <div class="dsr-header-toolbar__side-block">
+      <a
+        class="dsr-link-btn"
+        [routerLink]="['/about']"
+        routerLinkActive="dsr-header-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <mat-icon class="mat-icon material-icons"> help_outline </mat-icon>
+        <span class="dsr-hide-for-small">How to use</span>
+      </a>
+      <a
+        class="dsr-link-btn"
+        [routerLink]="['/']"
+        [routerLinkActiveOptions]="{ exact: true }"
+        routerLinkActive="dsr-header-active"
+        *ngIf="isAuthorized"
+      >
+        <mat-icon class="mat-icon material-icons"> home </mat-icon>
+        <span class="dsr-hide-for-small">Home</span>
+      </a>
+    </div>
+    <div *ngIf="!isAuthorized">
+      <a
+        class="dsr-link-btn"
+        [routerLink]="['/login']"
+        routerLinkActive="dsr-header-active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <mat-icon class="mat-icon material-icons"> login </mat-icon>
+        <span class="dsr-hide-for-small">Log In</span>
+      </a>
+    </div>
     <div class="dsr-header-toolbar__theme">
       <mat-slide-toggle [checked]="isDarkTheme$ | async" (change)="toggleTheme($event)">
       </mat-slide-toggle>
@@ -11,7 +46,7 @@
     </div>
 
     <ng-container *ngIf="isAuthorized">
-      <div class="dsr-header-toolbar__user">
+      <div class="dsr-header-toolbar__user dsr-header-title">
         <span>{{ user.name }}</span>
         <mat-icon class="mat-icon material-icons">person</mat-icon>
       </div>

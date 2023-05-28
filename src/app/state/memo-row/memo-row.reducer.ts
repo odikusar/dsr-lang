@@ -37,7 +37,9 @@ const featureReducer = createReducer(
         changes: {
           ...state.entities[id],
           isShown: false,
-          isSelected: payload.indexOf(Number(id)) !== -1,
+          isSelected:
+            payload.selectedRowsIndexes.indexOf(Number(id)) !== -1 &&
+            (!payload.withFlag || !!state.entities[id].flag),
         },
       })),
       state

@@ -16,6 +16,10 @@ const routes: Routes = [
     canActivate: [UnauthGuard],
   },
   {
+    path: 'about',
+    loadChildren: () => import('./features/about/about.module').then((m) => m.AboutModule),
+  },
+  {
     path: '**',
     pathMatch: 'full',
     redirectTo: '/static/404', /// !!!

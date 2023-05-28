@@ -9,7 +9,15 @@ export const loadAllSuccess = createAction(
 );
 export const loadAllFail = createAction('[MemoRow] Load All Fail', props<{ error: Error }>());
 
-export const setSelection = createAction('[MemoRow] Set Selection', props<{ payload: number[] }>());
+export const setSelection = createAction(
+  '[MemoRow] Set Selection',
+  props<{
+    payload: {
+      selectedRowsIndexes: number[];
+      withFlag: boolean;
+    };
+  }>()
+);
 
 export const setShown = createAction('[MemoRow] Set Shown', props<{ id: number }>());
 

@@ -17,6 +17,7 @@ interface PaginationForm {
   from: FormControl<number>;
   to: FormControl<number>;
   checkAllPages: FormControl<boolean>;
+  withFlag: FormControl<boolean>;
   pages: FormArray<FormControl<boolean>>;
 }
 
@@ -43,6 +44,7 @@ export class WorkspacePaginationComponent implements OnInit, OnChanges, OnDestro
     to: this.fb.control<number>(START_ROW_INDEX, [Validators.required, this.numbersValidation]),
     pages: this.fb.array<FormControl<boolean>>([]),
     checkAllPages: this.fb.control<boolean>(false),
+    withFlag: this.fb.control<boolean>(false),
   });
 
   constructor(
@@ -62,7 +64,7 @@ export class WorkspacePaginationComponent implements OnInit, OnChanges, OnDestro
           ROWS_PER_PAGE
         );
 
-        this.memoRowFacade.setSelection(selectedRowsIndexes);
+        this.memoRowFacade.setSelection(selectedRowsIndexes, formValue.withFlag);
       });
 
     this.form.controls.checkAllPages.valueChanges

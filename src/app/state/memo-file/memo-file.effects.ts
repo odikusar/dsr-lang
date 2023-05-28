@@ -2,27 +2,33 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FireApiService } from '@app/services';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { LoadingBarService } from '@ngx-loading-bar/core';
 import { of } from 'rxjs';
-import { catchError, map, switchMap, take } from 'rxjs/operators';
+import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
 import * as fromMemoRowActions from '../memo-row/memo-row.actions';
 import * as fromUserActions from '../user/user.actions';
 import * as fromActions from './memo-file.actions';
 
 @Injectable()
 export class MemoFileEffects {
+  private loader = this.loadingBar.useRef();
+
   constructor(
     private actions$: Actions,
     private fireApi: FireApiService,
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private loadingBar: LoadingBarService
   ) {}
 
   loadAll$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromActions.loadAll),
+      tap(() => this.loader.start()),
       switchMap(() => this.afAuth.authState.pipe(take(1))),
       switchMap((user) =>
         this.fireApi.getMemoFiles(user.uid).pipe(
           take(1),
+          tap(() => this.loader.complete()),
           switchMap((memoFiles) =>
             of(fromActions.loadAllSuccess({ payload: memoFiles }), fromMemoRowActions.loadAll())
           ),
