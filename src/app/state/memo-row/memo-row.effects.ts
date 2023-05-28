@@ -42,17 +42,19 @@ export class MemoRowEffects {
         this.http.get(memoFile.url, { responseType: 'text' }).pipe(
           map((memoData) => this.ngxCsvParser.csvStringToArray(memoData, ',')),
           map((items) =>
-            items.map(
-              (item, index) =>
-                ({
-                  id: index,
-                  word: item[WORD_INDEX],
-                  translate: item[TRANSLATE_INDEX],
-                  flag: item[FLAG_INDEX],
-                  isShown: false,
-                  isSelected: false,
-                } as MemoRow)
-            )
+            items
+              .filter((item) => !!item[WORD_INDEX] && !!item[TRANSLATE_INDEX])
+              .map(
+                (item, index) =>
+                  ({
+                    id: index,
+                    word: item[WORD_INDEX],
+                    translate: item[TRANSLATE_INDEX],
+                    flag: item[FLAG_INDEX],
+                    isShown: false,
+                    isSelected: false,
+                  } as MemoRow)
+              )
           ),
           map((memoRows) => {
             const lastRow = memoRows.slice(-1)[0];

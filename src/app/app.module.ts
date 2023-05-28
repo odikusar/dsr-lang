@@ -18,7 +18,7 @@ import { StateModule } from '@state/state.module';
 import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LayoutModule } from './shared/layout/layout.module';
+import { HeaderComponent } from './shared/components/header/header.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,7 +31,6 @@ import { LayoutModule } from './shared/layout/layout.module';
     StateModule,
     AngularFireStorageModule,
     AngularFireAuthModule,
-    LayoutModule,
     HttpClientModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
@@ -44,6 +43,7 @@ import { LayoutModule } from './shared/layout/layout.module';
       // registrationStrategy: 'registerWhenStable:30000'
       registrationStrategy: 'registerImmediately',
     }),
+    HeaderComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

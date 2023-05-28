@@ -43,7 +43,9 @@ export class WorkspaceFilesComponent {
   deleteMemoFile(memoFile: MemoFile): void {
     if (this.isDemoUser) return this.showDisallowMessage();
 
-    this.fileService.delete(memoFile);
+    if (window.confirm('Do you really want to delete this file?')) {
+      this.fileService.delete(memoFile);
+    }
   }
 
   chooseMemoFile(memoFile: MemoFile): void {
