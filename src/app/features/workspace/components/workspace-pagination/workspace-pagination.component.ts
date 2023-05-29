@@ -54,6 +54,65 @@ export class WorkspacePaginationComponent implements OnInit, OnChanges, OnDestro
   ) {}
 
   ngOnInit(): void {
+    this.watchFormChanges();
+    this.watchAllPagesCheckboxChanges();
+    this.watchPagesChanges();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!!changes['rowsTotalCount']) {
+      this.form.controls.pages.clear({ emitEvent: false });
+
+      if (this.rowsTotalCount > 0) {
+        for (let i = 0; i < this.pagesCount; i++) {
+          this.form.controls.pages.push(this.fb.control<boolean>(true), { emitEvent: false });
+        }
+
+        this.form.controls.pages.updateValueAndValidity();
+      }
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroy$.next();
+    this.onDestroy$.complete();
+  }
+
+  watchPagesChanges(): void {
+    this.form.controls.pages.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((pages) => {
+      const isAllPagesChecked = pages.every((item) => item === true);
+      const selectedPages = this.getSelectedPages(pages);
+
+      this.form.controls.checkAllPages.patchValue(isAllPagesChecked, { emitEvent: false });
+
+      if (selectedPages.length) {
+        const boundaryIndexes = this.memoService.getBoundaryRowsIndexes(
+          selectedPages,
+          this.rowsTotalCount,
+          ROWS_PER_PAGE
+        );
+
+        const fromRowNumber = boundaryIndexes.firstRowIndex + 1;
+        const toRowNumber = boundaryIndexes.lastRowIndex + 1;
+        const rowsLimitValidation = [Validators.min(fromRowNumber), Validators.max(toRowNumber)];
+
+        this.form.patchValue(
+          { from: fromRowNumber, to: toRowNumber },
+          {
+            emitEvent: false,
+          }
+        );
+
+        this.fromRowNumber$.next(fromRowNumber);
+        this.toRowNumber$.next(toRowNumber);
+
+        this.form.controls.from.setValidators(rowsLimitValidation);
+        this.form.controls.to.setValidators(rowsLimitValidation);
+      }
+    });
+  }
+
+  watchFormChanges(): void {
     this.form.valueChanges
       .pipe(debounceTime(100), distinctUntilChanged(), takeUntil(this.onDestroy$))
       .subscribe((formValue) => {
@@ -66,72 +125,14 @@ export class WorkspacePaginationComponent implements OnInit, OnChanges, OnDestro
 
         this.memoRowFacade.setSelection(selectedRowsIndexes, formValue.withFlag);
       });
+  }
 
+  watchAllPagesCheckboxChanges(): void {
     this.form.controls.checkAllPages.valueChanges
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((checkAllPages) => {
         this.form.controls.pages.patchValue(new Array(this.pagesCount).fill(checkAllPages));
       });
-
-    this.form.controls.pages.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((pages) => {
-      const isAllPagesChecked = pages.every((item) => item === true);
-
-      this.form.controls.checkAllPages.patchValue(isAllPagesChecked, {
-        emitEvent: false,
-      });
-
-      const selectedPages = this.getSelectedPages(pages);
-
-      if (selectedPages.length) {
-        const boundaryIndexes = this.memoService.getBoundaryRowsIndexes(
-          selectedPages,
-          this.rowsTotalCount,
-          ROWS_PER_PAGE
-        );
-
-        const fromRowNumber = boundaryIndexes.firstRowIndex + 1;
-        const toRowNumber = boundaryIndexes.lastRowIndex + 1;
-
-        this.form.patchValue(
-          { from: fromRowNumber, to: toRowNumber },
-          {
-            emitEvent: false,
-          }
-        );
-
-        const rowsLimitValidation = [Validators.min(fromRowNumber), Validators.max(toRowNumber)];
-
-        this.fromRowNumber$.next(fromRowNumber);
-        this.toRowNumber$.next(toRowNumber);
-
-        this.form.controls.from.setValidators(rowsLimitValidation);
-        this.form.controls.to.setValidators(rowsLimitValidation);
-      }
-    });
-
-    // this.ticketForm.patchValue(ticket, {emitEvent: false, onlySelf: true});
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (!!changes['rowsTotalCount']) {
-      this.form.controls.pages.clear({ emitEvent: false });
-
-      if (this.rowsTotalCount > 0) {
-        for (let i = 0; i < this.pagesCount; i++) {
-          this.form.controls.pages.push(this.fb.control<boolean>(true), { emitEvent: false });
-        }
-        this.form.controls.pages.updateValueAndValidity();
-      }
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.onDestroy$.next();
-    this.onDestroy$.complete();
-  }
-
-  get lastTotalRowIndex(): number {
-    return this.rowsTotalCount - 1 || 0;
   }
 
   get pagesCount(): number {

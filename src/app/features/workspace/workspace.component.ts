@@ -6,7 +6,6 @@ import { UserFacade } from '@state/user';
 @Component({
   selector: 'dsr-workspace',
   templateUrl: './workspace.component.html',
-  styleUrls: ['./workspace.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WorkspaceComponent {
