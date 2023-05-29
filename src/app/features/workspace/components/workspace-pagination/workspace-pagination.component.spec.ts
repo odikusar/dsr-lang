@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { ReactiveFormsModule } from '@angular/forms';
 import { WorkspacePaginationComponent } from './workspace-pagination.component';
 
 describe('WorkspacePaginationComponent', () => {
@@ -8,9 +9,9 @@ describe('WorkspacePaginationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WorkspacePaginationComponent ]
-    })
-    .compileComponents();
+      declarations: [WorkspacePaginationComponent],
+      imports: [ReactiveFormsModule],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(WorkspacePaginationComponent);
     component = fixture.componentInstance;
