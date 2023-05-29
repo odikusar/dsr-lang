@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { ROWS_PER_PAGE } from '@app/constants';
 
 @Component({
   selector: 'dsr-about',
@@ -8,8 +9,6 @@ import { Component, OnInit } from '@angular/core';
   standalone: true,
   imports: [CommonModule],
 })
-export class AboutComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+export class AboutComponent {
+  ROWS_PER_PAGE = ROWS_PER_PAGE;
 }

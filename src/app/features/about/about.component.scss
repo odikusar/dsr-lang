@@ -1,3 +1,13 @@
+@import './colors';
+
 .dsr-about-content {
   padding: 25px;
+}
+
+.dsr-image-screen {
+  text-align: center;
+
+  img {
+    border: 1px solid $mat-dark-accent-200;
+  }
 }
