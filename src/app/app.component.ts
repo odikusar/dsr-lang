@@ -13,13 +13,14 @@ import { ThemeService } from './services';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  title: string = 'Dikusar Angular App.';
+
   private loader = this.loadingBar.useRef();
   isInitialized$ = this.userFacade.isInitialized$;
   isAuthorized$ = this.userFacade.isAuthorized$;
   isLoading$ = this.userFacade.isLoading$;
   user$ = this.userFacade.user$;
   isDarkTheme$ = this.themeService.isDarkTheme$;
-  title: string = 'Dikusar Angular App.';
 
   constructor(
     private userFacade: UserFacade,

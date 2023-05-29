@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard, UnauthGuard } from './guards';
+import { PageNotFoundComponent } from './shared/components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -19,11 +20,7 @@ const routes: Routes = [
     path: 'about',
     loadChildren: () => import('./features/about/about.module').then((m) => m.AboutModule),
   },
-  {
-    path: '**',
-    pathMatch: 'full',
-    redirectTo: '/static/404', /// !!!
-  },
+  { path: '**', pathMatch: 'full', component: PageNotFoundComponent },
 ];
 
 @NgModule({

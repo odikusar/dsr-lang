@@ -1,4 +1,5 @@
 <ngx-loading-bar [includeSpinner]="false"></ngx-loading-bar>
+
 <div [ngClass]="{ 'dsr-dark-theme': isDarkTheme$ | async }" class="dsr-main-wrapper">
   <ng-container *ngIf="isInitialized$ | async; else isNotInitialized">
     <dsr-layout-header
