@@ -18,6 +18,8 @@ export const createSuccess = createAction(
   props<{ payload: MemoFile }>()
 );
 
+export const createFail = createAction('[MemoFile] Create Fail', props<{ error: Error }>());
+
 export const update = createAction('[MemoFile] Update', props<{ payload: Update<MemoFile> }>());
 
 export const updateSuccess = createAction(
@@ -26,8 +28,6 @@ export const updateSuccess = createAction(
 );
 
 export const updateFail = createAction('[MemoFile] Update Fail', props<{ error: Error }>());
-
-export const createFail = createAction('[MemoFile] Create Fail', props<{ error: Error }>());
 
 export const deleteOne = createAction('[MemoFile] Delete One', props<{ id: string }>());
 

@@ -8,6 +8,9 @@ import { User } from '../models/user.model';
   providedIn: 'root',
 })
 export class FireApiService {
+  readonly memoFilesCollection: string = 'memoFiles';
+  readonly usersCollection: string = 'users';
+
   constructor(private afs: AngularFirestore) {}
 
   documentToItem<T>(docAction: DocumentChangeAction<T>): T {
@@ -22,7 +25,7 @@ export class FireApiService {
 
   getUser(userId: string): Observable<User> {
     return this.afs
-      .doc<User>(`users/${userId}`)
+      .doc<User>(`${this.usersCollection}/${userId}`)
       .valueChanges()
       .pipe(
         take(1),
@@ -32,7 +35,7 @@ export class FireApiService {
 
   getMemoFiles(userId: string): Observable<MemoFile[]> {
     return this.afs
-      .collection<MemoFile>('memoFiles', (ref) => ref.where('userId', '==', userId))
+      .collection<MemoFile>(this.memoFilesCollection, (ref) => ref.where('userId', '==', userId))
       .snapshotChanges()
       .pipe(
         take(1),
@@ -41,24 +44,27 @@ export class FireApiService {
   }
 
   createMemoFile(memoFile: Partial<MemoFile>): Observable<MemoFile> {
-    return from(this.afs.collection<Partial<MemoFile>>('memoFiles').add(memoFile)).pipe(
-      map((res) => ({ ...memoFile, id: res.id } as MemoFile))
-    );
+    return from(
+      this.afs.collection<Partial<MemoFile>>(this.memoFilesCollection).add(memoFile)
+    ).pipe(map((res) => ({ ...memoFile, id: res.id } as MemoFile)));
   }
 
   updateMemoFile(memoFile: Partial<MemoFile>): Observable<MemoFile> {
     return from(
-      this.afs.collection<Partial<MemoFile>>('memoFiles').doc(memoFile.id).set(memoFile)
+      this.afs
+        .collection<Partial<MemoFile>>(this.memoFilesCollection)
+        .doc(memoFile.id)
+        .set(memoFile)
     ).pipe(map(() => ({ ...memoFile } as MemoFile)));
   }
 
   updateUser(userId: string, changes: Partial<User>): Observable<Partial<User>> {
-    return from(this.afs.collection<Partial<User>>('users').doc(userId).set(changes)).pipe(
-      map(() => ({ ...changes } as Partial<User>))
-    );
+    return from(
+      this.afs.collection<Partial<User>>(this.usersCollection).doc(userId).set(changes)
+    ).pipe(map(() => ({ ...changes } as Partial<User>)));
   }
 
   deleteMemoFile(memoFileId: string): Observable<void> {
-    return from(this.afs.doc<User>(`memoFiles/${memoFileId}`).delete());
+    return from(this.afs.doc<User>(`${this.memoFilesCollection}/${memoFileId}`).delete());
   }
 }

@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -8,6 +9,10 @@ import { UserFacade } from '@state/user';
 import * as fromActions from '@state/user/user.actions';
 import { Subject, take, takeUntil } from 'rxjs';
 
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
 interface LoginForm {
   email: FormControl<string>;
   password: FormControl<string>;
@@ -18,6 +23,8 @@ interface LoginForm {
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [CommonModule, MatCardModule, MatInputModule, MatButtonModule, ReactiveFormsModule],
 })
 export class LoginComponent implements OnInit, OnDestroy {
   private loader = this.loadingBar.useRef();

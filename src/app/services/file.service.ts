@@ -10,8 +10,8 @@ import { Observable, finalize, take } from 'rxjs';
   providedIn: 'root',
 })
 export class FileService {
-  private readonly basePath = '/csv';
-  private readonly RANDOM_FILENAME_PREFIX_LENGTH = 10;
+  private readonly basePath: string = '/csv';
+  private readonly RANDOM_FILENAME_PREFIX_LENGTH: number = 10;
 
   constructor(
     private storage: AngularFireStorage,
@@ -30,7 +30,7 @@ export class FileService {
           .ref(filePath)
           .getDownloadURL()
           .pipe(take(1))
-          .subscribe((downloadURL) => {
+          .subscribe((downloadURL: string) => {
             if (!!memoFile) {
               this.memoFileFacade.update({
                 ...memoFile,
@@ -74,9 +74,4 @@ export class FileService {
 
     return `${randomString}_${fileName}`;
   }
-
-  // REMOVE TO PIPE !!!!
-  // private getTitleFromFileName(fileName: string) {
-  //   return fileName.replace(/\.[^/.]+$/, '');
-  // }
 }

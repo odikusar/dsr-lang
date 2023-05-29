@@ -6,15 +6,17 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class ThemeService {
+  readonly themeFlag: string = 'isDarkTheme';
+
   isDarkTheme$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(this.getPresetTheme());
 
   toggleTheme(): void {
     this.isDarkTheme$.next(!this.isDarkTheme$.value);
-    localStorage.setItem('isDarkTheme', JSON.stringify(this.isDarkTheme$.value));
+    localStorage.setItem(this.themeFlag, JSON.stringify(this.isDarkTheme$.value));
   }
 
   private getPresetTheme(): boolean {
-    const isDarkTheme: boolean | null = JSON.parse(localStorage.getItem('isDarkTheme'));
+    const isDarkTheme: boolean | null = JSON.parse(localStorage.getItem(this.themeFlag));
 
     return typeof isDarkTheme == 'boolean' ? isDarkTheme : IS_DARK_THEME_BY_DEFAULT;
   }
