@@ -1,11 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatInputModule } from '@angular/material/input';
-import { NgxCsvParserModule } from 'ngx-csv-parser';
 import { WorkspaceComponent } from './workspace.component';
+
+import { CommonModule } from '@angular/common';
+import { StoreModule } from '@ngrx/store';
+
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 describe('WorkspaceComponent', () => {
   let component: WorkspaceComponent;
@@ -13,14 +15,12 @@ describe('WorkspaceComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [WorkspaceComponent],
-      imports: [
-        NgxCsvParserModule,
-        MatCheckboxModule,
-        MatButtonModule,
-        MatInputModule,
-        ReactiveFormsModule,
+      providers: [
+        { provide: AngularFireStorage, useValue: null },
+        { provide: ToastrService, useValue: null },
       ],
+      declarations: [WorkspaceComponent],
+      imports: [CommonModule, ReactiveFormsModule, StoreModule.forRoot({}), ToastrModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(WorkspaceComponent);
