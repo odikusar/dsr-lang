@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { DICTIONARY_LINK, EXPLANATION_LINK } from '@app/constants';
+import { DICTIONARY_LINK, EXPLANATION_LINK, GOOGLE_IMAGE_LINK } from '@app/constants';
 import { MemoRow } from '@models/memo-row.model';
 import { MemoRowFacade } from '@state/memo-row';
 import { UserFacade } from '@state/user';
@@ -68,8 +68,13 @@ export class WorkspaceControlsComponent implements OnInit, OnDestroy {
   openDictionary(): void {
     this.openInNewTab(`${DICTIONARY_LINK}${this.memoRow.word}`);
   }
+
   openExplanation(): void {
     this.openInNewTab(`${EXPLANATION_LINK}${this.memoRow.word}`);
+  }
+
+  openImage(): void {
+    this.openInNewTab(`${GOOGLE_IMAGE_LINK}${this.memoRow.word}`);
   }
 
   private openInNewTab(href: string): void {

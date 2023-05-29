@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
   isLoading$ = this.userFacade.isLoading$;
   user$ = this.userFacade.user$;
   isDarkTheme$ = this.themeService.isDarkTheme$;
+  title: string = 'Dikusar Angular App.';
 
   constructor(
     private userFacade: UserFacade,

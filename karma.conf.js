@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/dsr-lang'),
+      dir: require('path').join(__dirname, './coverage/dsr-memo'),
       subdir: '.',
       reporters: [
         { type: 'html' },
