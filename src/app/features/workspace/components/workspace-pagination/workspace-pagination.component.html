@@ -13,10 +13,7 @@
     </div>
   </div>
   <div class="dsr-pages-list">
-    <div class="dsr-page-item dsr-all-pages">
-      <div class="dsr-page-item__number">...</div>
-      <mat-checkbox formControlName="checkAllPages"></mat-checkbox>
-    </div>
+    <div class="dsr-page-item dsr-pages-caption dsr-hide-for-small">pages:</div>
     <div
       class="dsr-page-item"
       formArrayName="pages"
@@ -24,6 +21,10 @@
     >
       <div class="dsr-page-item__number">{{ i + 1 }}</div>
       <mat-checkbox [formControlName]="i"></mat-checkbox>
+    </div>
+    <div class="dsr-page-item dsr-all-pages">
+      <div class="dsr-page-item__number">...</div>
+      <mat-checkbox formControlName="checkAllPages"></mat-checkbox>
     </div>
   </div>
   <div class="dsr-bounds">
