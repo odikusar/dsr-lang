@@ -3,9 +3,12 @@
 [Click here for the demo](https://dsr-lang.web.app/)
 
 ## Stack:
-- Angular 14
+- Angular 14, TypeScript, Reactive Forms, Animation
+- Angular Material + Theming
+- Firebase, Authentication, FireStorage, FireHosting
 - RxJs
 - NgRx Store, NgRx Entity
+- Unit tests
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.8.
 
