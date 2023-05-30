@@ -1,4 +1,9 @@
-# Dikusar Oleg demo Angular Progressive Web App.
+# Oleg Dikusar demo Angular Progressive Web App.
+
+## Stack:
+- Angular 14
+- RxJs
+- NgRx Store, NgRx Entity
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.8.
 
