@@ -5,7 +5,7 @@ import { MemoFile } from '@models/memo-file.model';
   name: 'fileName',
 })
 export class FileNamePipe implements PipeTransform {
-  readonly FILENAME_LENGTH = 12;
+  private readonly FILENAME_LENGTH = 12;
 
   transform(memoFile: MemoFile): string {
     return this.removeExtension(memoFile.initialName).slice(0, this.FILENAME_LENGTH);
