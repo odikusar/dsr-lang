@@ -3,7 +3,7 @@
 [Click here for the demo](https://dsr-lang.web.app/)
 
 ## Stack:
-- Angular 14, TypeScript, Reactive Forms, Animation
+- Angular 14, TypeScript, Reactive Forms, Animation, Standalone components
 - Angular Material + Theming
 - Firebase, Authentication, FireStorage, FireHosting
 - RxJs
