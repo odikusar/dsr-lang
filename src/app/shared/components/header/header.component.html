@@ -6,7 +6,7 @@
 
     <div class="dsr-header-toolbar__side-block">
       <a
-        class="dsr-link-btn"
+        dsrButtonClass
         [routerLink]="['/about']"
         routerLinkActive="dsr-header-active"
         [routerLinkActiveOptions]="{ exact: true }"
@@ -15,7 +15,7 @@
         <span class="dsr-hide-for-small">How to use</span>
       </a>
       <a
-        class="dsr-link-btn"
+        dsrButtonClass
         [routerLink]="['/']"
         [routerLinkActiveOptions]="{ exact: true }"
         routerLinkActive="dsr-header-active"
@@ -27,7 +27,7 @@
     </div>
     <div *ngIf="!isAuthorized">
       <a
-        class="dsr-link-btn"
+        dsrButtonClass
         [routerLink]="['/login']"
         routerLinkActive="dsr-header-active"
         [routerLinkActiveOptions]="{ exact: true }"
@@ -50,7 +50,7 @@
         <span>{{ user.name }}</span>
         <mat-icon class="mat-icon material-icons">person</mat-icon>
       </div>
-      <div class="dsr-header-toolbar__logout dsr-link-btn" (click)="onSignOut()">
+      <div class="dsr-header-toolbar__logout" dsrButtonClass (click)="onSignOut()">
         <span class="dsr-hide-for-small">Sign out</span>
         <mat-icon class="mat-icon material-icons">logout</mat-icon>
       </div>

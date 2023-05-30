@@ -1,5 +1,5 @@
 <div class="dsr-file">
-  <div class="dsr-file__body dsr-link-btn" [class.dsr-file__body_active]="isActive">
+  <div dsrButtonClass class="dsr-file__body" [class.dsr-file__body_active]="isActive">
     <span class="material-icons dsr-file__body-icon" (click)="chooseMemoFile.emit(memoFile)">
       description
     </span>
@@ -13,11 +13,12 @@
       (click)="editedFile.value = null"
       (change)="uploadMemoFile.emit($event)"
     />
-    <span class="material-icons dsr-file__action dsr-link-btn" (click)="editedFile.click()">
+    <span dsrButtonClass class="material-icons dsr-file__action" (click)="editedFile.click()">
       drive_file_rename_outline
     </span>
     <span
-      class="material-icons dsr-file__action dsr-link-btn"
+      dsrButtonClass
+      class="material-icons dsr-file__action"
       (click)="deleteMemoFile.emit(memoFile)"
     >
       delete_forever

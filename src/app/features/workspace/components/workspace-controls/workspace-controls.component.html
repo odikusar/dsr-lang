@@ -1,17 +1,18 @@
 <!-- <input type="checkbox" formControlName="checkAllPages" /> All Pages showTranslation -->
 <div class="dsr-control-row">
   <button
-    class="dsr-link-btn"
+    dsrButtonClass
     mat-raised-button
     (click)="showPrevious()"
     [disabled]="!isPreviousMemoRowReady"
   >
     Previous
   </button>
-  <button class="dsr-link-btn" mat-raised-button (click)="showAnswer()">Show Answer</button>
+  <button dsrButtonClass mat-raised-button (click)="showAnswer()">Show Answer</button>
 
   <button
-    class="dsr-link-btn dsr-next-btn"
+    dsrButtonClass
+    class="dsr-next-btn"
     mat-raised-button
     (click)="showNext()"
     [disabled]="!rowsLeftCount"
@@ -21,13 +22,11 @@
 </div>
 <div class="dsr-control-row">
   <mat-checkbox [formControl]="isTranslationByDefaultCtrl">Translation by default</mat-checkbox>
-  <button class="dsr-link-btn" mat-raised-button (click)="reset()">Repeat Again</button>
+  <button dsrButtonClass mat-raised-button (click)="reset()">Repeat Again</button>
 </div>
 
 <div class="dsr-control-row">
-  <button class="dsr-link-btn" mat-raised-button (click)="openImage()">> Google Image</button>
+  <button dsrButtonClass mat-raised-button (click)="openImage()">> Google Image</button>
 
-  <button class="dsr-link-btn" mat-raised-button (click)="openExplanation()">> Explanation</button>
-
-  <button class="dsr-link-btn" mat-raised-button (click)="openDictionary()">> Dictionary</button>
+  <button dsrButtonClass mat-raised-button (click)="openExplanation()">> Explanation</button>
 </div>

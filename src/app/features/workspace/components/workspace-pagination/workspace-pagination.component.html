@@ -27,7 +27,7 @@
     </div>
   </div>
   <div class="dsr-bounds">
-    <button class="dsr-link-btn" mat-raised-button (click)="addUpRows()">
+    <button dsrButtonClass mat-raised-button (click)="addUpRows()">
       + {{ DEDUCTION_COEFFICIENT }}
     </button>
     <mat-form-field class="drs-bound-input">
@@ -52,7 +52,7 @@
       />
     </mat-form-field>
     <button
-      class="dsr-link-btn"
+      dsrButtonClass
       mat-raised-button
       (click)="deductRows()"
       [disabled]="DEDUCTION_COEFFICIENT >= rowsLeftCount"

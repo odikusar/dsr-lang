@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
+import { ButtonClassDirective } from '@shared/directives/button-class.directive';
 
 @Component({
   selector: 'dsr-layout-header',
@@ -23,6 +24,7 @@ import { RouterModule } from '@angular/router';
     MatButtonModule,
     MatSlideToggleModule,
     RouterModule,
+    ButtonClassDirective,
   ],
 })
 export class HeaderComponent {

@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
+import { ButtonClassDirective } from '@shared/directives/button-class.directive';
 import { NgxCsvParserModule } from 'ngx-csv-parser';
 import { WorkspaceCardComponent } from './/components/workspace-card/workspace-card.component';
 import { WorkspaceControlsComponent } from './components/workspace-controls/workspace-controls.component';
@@ -33,6 +34,7 @@ import { WorkspaceComponent } from './workspace.component';
     MatButtonModule,
     MatInputModule,
     ReactiveFormsModule,
+    ButtonClassDirective,
   ],
 })
 export class WorkspaceModule {}

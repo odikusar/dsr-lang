@@ -1,5 +1,6 @@
 @import './mixins';
 @import './variables';
+@import './colors';
 @import './theme';
 @import 'ngx-toastr/toastr';
 
@@ -42,4 +43,16 @@ body {
 hr {
   opacity: 0.7;
   margin: 15px 25px;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $mat-accent-lighter;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $mat-dark-accent-200;
 }
