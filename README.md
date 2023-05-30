@@ -1,5 +1,7 @@
 # Oleg Dikusar demo Angular Progressive Web App.
 
+[Click here for the demo](https://dsr-lang.web.app/)
+
 ## Stack:
 - Angular 14
 - RxJs
