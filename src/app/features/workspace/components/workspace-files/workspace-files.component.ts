@@ -55,4 +55,8 @@ export class WorkspaceFilesComponent {
   showDisallowMessage(): void {
     this.toastr.warning('This action is not allowed for demo user');
   }
+
+  fileTrackBy(index: number, item: MemoFile) {
+    return item.id;
+  }
 }

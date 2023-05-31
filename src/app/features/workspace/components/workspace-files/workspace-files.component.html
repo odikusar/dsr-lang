@@ -13,7 +13,7 @@
     </span>
   </div>
 
-  <ng-container *ngFor="let memoFile of memoFiles">
+  <ng-container *ngFor="let memoFile of memoFiles; trackBy: fileTrackBy">
     <div class="dsr-file-wrap" [class.dsr-file-wrap_active]="memoFile.id === activeMemoFileId">
       <dsr-workspace-file
         [memoFile]="memoFile"
