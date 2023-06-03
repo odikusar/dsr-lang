@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/compat/f
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { UserApiService } from './user-api.service';
 
-describe('FireApiService', () => {
+describe('UserApiService', () => {
   let service: UserApiService;
 
   beforeEach(() => {
