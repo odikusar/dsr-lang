@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { FireApiService } from '@app/services';
+import { MemoFileApiService } from '@app/services/api/memo-file-api.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 import { of } from 'rxjs';
@@ -15,7 +15,7 @@ export class MemoFileEffects {
 
   constructor(
     private actions$: Actions,
-    private fireApi: FireApiService,
+    private memoFileApi: MemoFileApiService,
     private afAuth: AngularFireAuth,
     private loadingBar: LoadingBarService
   ) {}
@@ -26,7 +26,7 @@ export class MemoFileEffects {
       tap(() => this.loader.start()),
       switchMap(() => this.afAuth.authState.pipe(take(1))),
       switchMap((user) =>
-        this.fireApi.getMemoFiles(user.uid).pipe(
+        this.memoFileApi.loadAll(user.uid).pipe(
           take(1),
           tap(() => this.loader.complete()),
           switchMap((memoFiles) =>
@@ -42,7 +42,7 @@ export class MemoFileEffects {
     this.actions$.pipe(
       ofType(fromActions.create),
       switchMap(({ payload }) =>
-        this.fireApi.createMemoFile(payload).pipe(
+        this.memoFileApi.create(payload).pipe(
           switchMap((memoFile) =>
             of(
               fromActions.createSuccess({ payload: memoFile }),
@@ -59,7 +59,7 @@ export class MemoFileEffects {
     this.actions$.pipe(
       ofType(fromActions.update),
       switchMap(({ payload }) =>
-        this.fireApi.updateMemoFile(payload.changes).pipe(
+        this.memoFileApi.update(payload.changes).pipe(
           switchMap((memoFile) =>
             of(
               fromActions.updateSuccess({ payload: { id: memoFile.id, changes: memoFile } }),
@@ -76,7 +76,7 @@ export class MemoFileEffects {
     this.actions$.pipe(
       ofType(fromActions.deleteOne),
       switchMap((payload) =>
-        this.fireApi.deleteMemoFile(payload.id).pipe(
+        this.memoFileApi.delete(payload.id).pipe(
           map(() => fromActions.deleteOneSuccess({ id: payload.id })),
           catchError((error) => of(fromActions.deleteOneFail({ error })))
         )

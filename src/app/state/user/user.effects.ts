@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { FireApiService } from '@app/services';
+import { UserApiService } from '@app/services/api/user-api.service';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import * as fromMemoRowActions from '@state/memo-row/memo-row.actions';
 import { from, of } from 'rxjs';
@@ -13,7 +13,7 @@ export class UserEffects {
   constructor(
     private actions$: Actions,
     private afAuth: AngularFireAuth,
-    private fireApi: FireApiService,
+    private userApi: UserApiService,
     private userFacade: UserFacade
   ) {}
 
@@ -23,7 +23,7 @@ export class UserEffects {
       switchMap(() => this.afAuth.authState.pipe(take(1))),
       switchMap((user) => {
         if (!!user) {
-          return this.fireApi.getUser(user.uid).pipe(
+          return this.userApi.load(user.uid).pipe(
             tap((user) => this.userFacade.setUserId(user.id)),
             map((user) => fromActions.initAuthorized({ user })),
             catchError((error) => of(fromActions.initFail({ error })))
@@ -46,7 +46,7 @@ export class UserEffects {
           )
         ).pipe(
           switchMap((signInState) =>
-            this.fireApi.getUser(signInState.user.uid).pipe(
+            this.userApi.load(signInState.user.uid).pipe(
               tap((user) => this.userFacade.setUserId(user.id)),
               map((user) => fromActions.signInSuccess({ user }))
             )
@@ -76,8 +76,8 @@ export class UserEffects {
       ofType(fromActions.setActiveMemoFileId),
       withLatestFrom(this.userFacade.user$),
       switchMap(([{ id }, user]) =>
-        this.fireApi
-          .updateUser(user.id, { ...user, activeMemoFileId: id })
+        this.userApi
+          .update(user.id, { ...user, activeMemoFileId: id })
           .pipe(map(() => fromMemoRowActions.loadAll()))
       )
     )
@@ -88,7 +88,7 @@ export class UserEffects {
       ofType(fromActions.updateSettings),
       withLatestFrom(this.userFacade.user$),
       switchMap(([{ payload }, user]) =>
-        this.fireApi.updateUser(user.id, { ...user, ...payload.changes }).pipe(
+        this.userApi.update(user.id, { ...user, ...payload.changes }).pipe(
           map(() => fromActions.updateSettingsSuccess({ payload })),
           catchError((error) => of(fromActions.updateSettingsFail({ error })))
         )
