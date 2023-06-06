@@ -27,7 +27,7 @@ const routes: Routes = [
     path: '**',
     pathMatch: 'full',
     loadComponent: () =>
-      import('./shared/components/page-not-found/page-not-found.component').then(
+      import('./components/page-not-found/page-not-found.component').then(
         (mod) => mod.PageNotFoundComponent
       ),
   },

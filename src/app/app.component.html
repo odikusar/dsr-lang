@@ -2,11 +2,11 @@
 
 <div [class.dsr-dark-theme]="isDarkTheme$ | async" class="dsr-main-wrapper">
   <ng-container *ngIf="isInitialized$ | async; else isNotInitialized">
-    <dsr-layout-header
+    <dsr-header
       [isAuthorized]="isAuthorized$ | async"
       [user]="user$ | async"
       (signOut)="signOut()"
-    ></dsr-layout-header>
+    ></dsr-header>
 
     <div class="dsr-content-wrapper">
       <router-outlet></router-outlet>

@@ -9,10 +9,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
-import { ButtonClassDirective } from '@shared/directives/button-class.directive';
+import { ButtonClassDirective } from '@app/directives/button-class.directive';
 
 @Component({
-  selector: 'dsr-layout-header',
+  selector: 'dsr-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

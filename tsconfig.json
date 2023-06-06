@@ -25,7 +25,6 @@
     ],
     "paths": {
       "@features/*": ["src/app/features/*"],
-      "@shared/*": ["src/app/shared/*"],
       "@guards/*": ["src/app/guards/*"],
       "@state/*": ["src/app/state/*"],
       "@models/*": ["src/app/models/*"],
