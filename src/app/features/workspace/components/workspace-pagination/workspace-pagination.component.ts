@@ -81,7 +81,7 @@ export class WorkspacePaginationComponent implements OnInit, OnChanges, OnDestro
   watchPagesChanges(): void {
     this.form.controls.pages.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((pages) => {
       const isAllPagesChecked = pages.every((item) => item === true);
-      const selectedPages = this.getSelectedPages(pages);
+      const selectedPages = this.memoService.getSelectedPages(pages);
 
       this.form.controls.checkAllPages.patchValue(isAllPagesChecked, { emitEvent: false });
 
@@ -117,7 +117,7 @@ export class WorkspacePaginationComponent implements OnInit, OnChanges, OnDestro
       .pipe(debounceTime(100), distinctUntilChanged(), takeUntil(this.onDestroy$))
       .subscribe((formValue) => {
         const selectedRowsIndexes = this.memoService.getSelectedRowsIndexes(
-          this.getSelectedPages(formValue.pages),
+          this.memoService.getSelectedPages(formValue.pages),
           formValue.from - 1,
           formValue.to - 1,
           ROWS_PER_PAGE
@@ -137,10 +137,6 @@ export class WorkspacePaginationComponent implements OnInit, OnChanges, OnDestro
 
   get pagesCount(): number {
     return this.rowsTotalCount < ROWS_PER_PAGE ? 1 : Math.ceil(this.rowsTotalCount / ROWS_PER_PAGE);
-  }
-
-  private getSelectedPages(checkedPages: boolean[]): number[] {
-    return checkedPages.reduce((out, value, index) => (!!value ? out.concat(index) : out), []);
   }
 
   addUpRows() {

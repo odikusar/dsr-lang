@@ -15,7 +15,6 @@ export class WorkspaceComponent {
   isDemoUser$ = this.userFacade.isDemo$;
   memoRows$ = this.memoRowFacade.memoRows$;
   selectedFreshMemoRows$ = this.memoRowFacade.selectedFreshMemoRows$;
-  randomMemoRow$ = this.memoRowFacade.randomMemoRow$;
   isPreviousMemoRowShown$ = this.memoRowFacade.isPreviousMemoRowShown$;
   memoRow$ = this.memoRowFacade.memoRow$;
   isPreviousMemoRowReady$ = this.memoRowFacade.isPreviousMemoRowReady$;

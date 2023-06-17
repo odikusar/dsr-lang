@@ -70,4 +70,8 @@ export class MemoService {
 
     return randomMemoRow;
   }
+
+  getSelectedPages(checkedPages: boolean[]): number[] {
+    return checkedPages.reduce((out, value, index) => (!!value ? out.concat(index) : out), []);
+  }
 }

@@ -31,7 +31,6 @@ export class MemoRowFacade {
       isPreviousMemoRowShown ? this.previousMemoRow$ : this.randomMemoRow$
     )
   );
-
   rowsLeftCount$ = this.selectedFreshMemoRows$.pipe(
     map((memoRows) => (memoRows?.length > 0 ? memoRows?.length - 1 : 0))
   );
