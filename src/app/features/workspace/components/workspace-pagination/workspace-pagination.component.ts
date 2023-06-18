@@ -10,6 +10,7 @@ import {
 import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DEDUCTION_COEFFICIENT, ROWS_PER_PAGE, START_ROW_INDEX } from '@app/constants';
 import { MemoService } from '@app/services/memo.service';
+import { MemoRow } from '@models/index';
 import { MemoRowFacade } from '@state/memo-row';
 import { BehaviorSubject, Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
 
@@ -31,6 +32,7 @@ export class WorkspacePaginationComponent implements OnInit, OnChanges, OnDestro
   @Input() rowsTotalCount: number;
   @Input() rowsLeftCount: number;
   @Input() currentMemoRowId: number;
+  @Input() memoRows: MemoRow[];
 
   DEDUCTION_COEFFICIENT = DEDUCTION_COEFFICIENT;
   fromRowNumber$: BehaviorSubject<number> = new BehaviorSubject(1);
@@ -57,6 +59,7 @@ export class WorkspacePaginationComponent implements OnInit, OnChanges, OnDestro
     this.watchFormChanges();
     this.watchAllPagesCheckboxChanges();
     this.watchPagesChanges();
+    this.watchFlagChanges();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -68,7 +71,11 @@ export class WorkspacePaginationComponent implements OnInit, OnChanges, OnDestro
           this.form.controls.pages.push(this.fb.control<boolean>(true), { emitEvent: false });
         }
 
-        this.form.controls.pages.updateValueAndValidity();
+        if (this.form.controls.withFlag.value) {
+          this.form.controls.withFlag.updateValueAndValidity();
+        } else {
+          this.form.controls.pages.updateValueAndValidity();
+        }
       }
     }
   }
@@ -110,6 +117,37 @@ export class WorkspacePaginationComponent implements OnInit, OnChanges, OnDestro
         this.form.controls.to.setValidators(rowsLimitValidation);
       }
     });
+  }
+
+  watchFlagChanges(): void {
+    this.form.controls.withFlag.valueChanges
+      .pipe(takeUntil(this.onDestroy$))
+      .subscribe((withFlag) => {
+        if (withFlag) {
+          const flaggedMemoRowIds = this.memoRows
+            .filter((memoRow) => !!memoRow.flag)
+            .map((memoRow) => memoRow.id);
+
+          const pagesWithRows = this.memoService.getPagesWithRows(
+            this.memoService.getSelectedPages(this.form.controls.pages.value),
+            flaggedMemoRowIds,
+            ROWS_PER_PAGE
+          );
+
+          this.form.controls.pages.clear({ emitEvent: false });
+
+          for (let i = 0; i < this.pagesCount; i++) {
+            this.form.controls.pages.push(
+              this.fb.control<boolean>(pagesWithRows.indexOf(i) !== -1 ? true : false),
+              {
+                emitEvent: false,
+              }
+            );
+          }
+
+          this.form.controls.pages.updateValueAndValidity();
+        }
+      });
   }
 
   watchFormChanges(): void {

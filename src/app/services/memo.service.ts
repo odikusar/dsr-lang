@@ -20,9 +20,7 @@ export class MemoService {
   ): BoundaryIndexes {
     const firstPage = pages[0];
     const lastPage = pages[pages.length - 1];
-
     const lastTotalRowIndex = rowsTotalCount - 1 || 0;
-
     const firstRowIndex = firstPage * rowsPerPage;
 
     let lastRowIndex = (lastPage + 1) * rowsPerPage - 1;
@@ -73,5 +71,23 @@ export class MemoService {
 
   getSelectedPages(checkedPages: boolean[]): number[] {
     return checkedPages.reduce((out, value, index) => (!!value ? out.concat(index) : out), []);
+  }
+
+  getPagesWithRows(pages: number[] = [], memoRowIds: number[], rowsPerPage: number): number[] {
+    if (!pages.length || !memoRowIds.length) {
+      return [];
+    }
+
+    return pages.reduce(
+      (out, pageNumber) =>
+        memoRowIds.find(
+          (memoRowId) =>
+            memoRowId >= pageNumber * rowsPerPage &&
+            memoRowId < pageNumber * rowsPerPage + rowsPerPage - 1
+        ) !== undefined
+          ? out.concat(pageNumber)
+          : out,
+      []
+    );
   }
 }

@@ -10,6 +10,7 @@
   [rowsTotalCount]="(memoRows$ | async)?.length"
   [currentMemoRowId]="(memoRow$ | async)?.id"
   [rowsLeftCount]="rowsLeftCount$ | async"
+  [memoRows]="memoRows$ | async"
 ></dsr-workspace-pagination>
 
 <hr />

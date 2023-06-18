@@ -28,4 +28,8 @@ describe('MemoService', () => {
   it('should return selected rows indexes', () => {
     expect(service.getSelectedRowsIndexes([0, 2, 4, 5], 4, 15, 5)).toEqual([4, 10, 11, 12, 13, 14]);
   });
+
+  it('should return pages numbers with selected rows indexes', () => {
+    expect(service.getPagesWithRows([0, 1, 3, 5], [0, 1, 6, 26], 5)).toEqual([0, 1, 5]);
+  });
 });
