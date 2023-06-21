@@ -8,7 +8,7 @@
 - Firebase, Authentication, FireStorage, FireHosting
 - RxJs
 - NgRx Store, NgRx Entity
-- Unit tests
+- Unit Tests, Angular Component Tests
 
 PWA screenshot:
 
