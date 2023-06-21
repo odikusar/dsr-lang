@@ -4,7 +4,7 @@
 
 ## Stack:
 - Angular 14, TypeScript, Reactive Forms, Animation, Standalone components
-- Angular Material + Theming
+- Angular Material + theming
 - Firebase, Authentication, FireStorage, FireHosting
 - RxJs
 - NgRx Store, NgRx Entity
