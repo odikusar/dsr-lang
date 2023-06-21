@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { filter, map, take, tap } from 'rxjs/operators';
 
-import { UserFacade } from '@state/user';
+import { UserFacade } from '@app/store/user';
 
 @Injectable({
   providedIn: 'root',

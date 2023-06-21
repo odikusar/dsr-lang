@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { DICTIONARY_LINK, EXPLANATION_LINK, GOOGLE_IMAGE_LINK } from '@app/constants';
+import { MemoRowFacade } from '@app/store/memo-row';
+import { UserFacade } from '@app/store/user';
 import { MemoRow } from '@models/memo-row.model';
-import { MemoRowFacade } from '@state/memo-row';
-import { UserFacade } from '@state/user';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, takeUntil } from 'rxjs';
 

@@ -1,5 +1,5 @@
+import * as fromUserActions from '@app/store/user/user.actions';
 import { Action, ActionReducer, MetaReducer } from '@ngrx/store';
-import * as fromUserActions from '@state/user/user.actions';
 import { AppState } from './reducers';
 
 export function clearState(reducer: ActionReducer<AppState>) {

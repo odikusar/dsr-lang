@@ -3,10 +3,10 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DEMO_USER } from '@app/constants';
+import { UserFacade } from '@app/store/user';
+import * as fromActions from '@app/store/user/user.actions';
 import { Actions, ofType } from '@ngrx/effects';
 import { LoadingBarService } from '@ngx-loading-bar/core';
-import { UserFacade } from '@state/user';
-import * as fromActions from '@state/user/user.actions';
 import { Subject, take, takeUntil } from 'rxjs';
 
 import { ReactiveFormsModule } from '@angular/forms';

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { UserApiService } from '@app/services/api/user-api.service';
+import * as fromMemoRowActions from '@app/store/memo-row/memo-row.actions';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import * as fromMemoRowActions from '@state/memo-row/memo-row.actions';
 import { from, of } from 'rxjs';
 import { catchError, map, switchMap, take, tap, withLatestFrom } from 'rxjs/operators';
 import * as fromActions from './user.actions';

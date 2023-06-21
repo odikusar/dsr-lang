@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { MemoFile } from '@app/models';
+import * as fromActions from '@app/store/memo-file/memo-file.actions';
+import * as fromReducer from '@app/store/memo-file/memo-file.reducer';
+import * as fromSelectors from '@app/store/memo-file/memo-file.selectors';
 import { Store, select } from '@ngrx/store';
-import * as fromActions from '@state/memo-file/memo-file.actions';
-import * as fromReducer from '@state/memo-file/memo-file.reducer';
-import * as fromSelectors from '@state/memo-file/memo-file.selectors';
 import { Observable, filter, take } from 'rxjs';
 
 @Injectable({

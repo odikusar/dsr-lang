@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { UploadTaskSnapshot } from '@angular/fire/compat/storage/interfaces';
+import { MemoFileFacade } from '@app/store/memo-file';
+import { UserFacade } from '@app/store/user';
 import { MemoFile } from '@models/memo-file.model';
-import { MemoFileFacade } from '@state/memo-file';
-import { UserFacade } from '@state/user';
 import { Observable, finalize, take } from 'rxjs';
 
 @Injectable({

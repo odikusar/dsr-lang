@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MemoFileFacade } from '@state/memo-file';
-import { MemoRowFacade } from '@state/memo-row';
-import { UserFacade } from '@state/user';
+import { MemoFileFacade } from '@app/store/memo-file';
+import { MemoRowFacade } from '@app/store/memo-row';
+import { UserFacade } from '@app/store/user';
 
 @Component({
   selector: 'dsr-workspace',

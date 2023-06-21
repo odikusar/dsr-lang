@@ -13,9 +13,9 @@ import {
 } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { HeaderComponent } from '@app/components/header/header.component';
+import { StateModule } from '@app/store/state.module';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { environment } from '@src/environments/environment';
-import { StateModule } from '@state/state.module';
 import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';

@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { FileService } from '@app/services';
+import { UserFacade } from '@app/store/user';
 import { MemoFile } from '@models/memo-file.model';
 import { LoadingBarService } from '@ngx-loading-bar/core';
-import { UserFacade } from '@state/user';
 import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'dsr-workspace-files',

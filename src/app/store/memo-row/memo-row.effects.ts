@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FLAG_INDEX, TRANSLATE_INDEX, WORD_INDEX } from '@app/constants';
+import * as fromMemoFileReducer from '@app/store/memo-file/memo-file.reducer';
+import * as fromMemoFileSelectors from '@app/store/memo-file/memo-file.selectors';
+import * as fromUserReducer from '@app/store/user/user.reducer';
+import * as fromUserSelectors from '@app/store/user/user.selectors';
 import { MemoRow } from '@models/index';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store, select } from '@ngrx/store';
 import { LoadingBarService } from '@ngx-loading-bar/core';
-import * as fromMemoFileReducer from '@state/memo-file/memo-file.reducer';
-import * as fromMemoFileSelectors from '@state/memo-file/memo-file.selectors';
-import * as fromUserReducer from '@state/user/user.reducer';
-import * as fromUserSelectors from '@state/user/user.selectors';
 import { NgxCsvParser } from 'ngx-csv-parser';
 import { of } from 'rxjs';
 import { catchError, filter, map, switchMap, take, tap } from 'rxjs/operators';

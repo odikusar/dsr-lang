@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserFacade } from '@app/store/user';
+import * as fromUserActions from '@app/store/user/user.actions';
 import { Actions, ofType } from '@ngrx/effects';
 import { LoadingBarService } from '@ngx-loading-bar/core';
-import { UserFacade } from '@state/user';
-import * as fromUserActions from '@state/user/user.actions';
 import { filter, take } from 'rxjs';
 import { ThemeService } from './services';
 

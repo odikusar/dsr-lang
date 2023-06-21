@@ -10,8 +10,8 @@ import {
 import { FormArray, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { DEDUCTION_COEFFICIENT, ROWS_PER_PAGE, START_ROW_INDEX } from '@app/constants';
 import { MemoService } from '@app/services/memo.service';
+import { MemoRowFacade } from '@app/store/memo-row';
 import { MemoRow } from '@models/index';
-import { MemoRowFacade } from '@state/memo-row';
 import { BehaviorSubject, Subject, debounceTime, distinctUntilChanged, takeUntil } from 'rxjs';
 
 interface PaginationForm {

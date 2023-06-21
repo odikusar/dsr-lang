@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { MemoService } from '@app/services/memo.service';
+import * as fromActions from '@app/store/memo-row/memo-row.actions';
+import * as fromReducer from '@app/store/memo-row/memo-row.reducer';
+import * as fromSelectors from '@app/store/memo-row/memo-row.selectors';
 import { Store, select } from '@ngrx/store';
-import * as fromActions from '@state/memo-row/memo-row.actions';
-import * as fromReducer from '@state/memo-row/memo-row.reducer';
-import * as fromSelectors from '@state/memo-row/memo-row.selectors';
 import { BehaviorSubject, combineLatest, filter, map, mergeMap, shareReplay } from 'rxjs';
 
 @Injectable({

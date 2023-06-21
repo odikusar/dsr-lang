@@ -26,7 +26,7 @@
     "paths": {
       "@features/*": ["src/app/features/*"],
       "@guards/*": ["src/app/guards/*"],
-      "@state/*": ["src/app/state/*"],
+      "@store/*": ["src/app/store/*"],
       "@models/*": ["src/app/models/*"],
       "@app/*": ["src/app/*"],
       "@src/*": ["src/*"],

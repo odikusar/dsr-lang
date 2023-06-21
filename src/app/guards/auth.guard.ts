@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, CanLoad, Router } from '@angular/router';
-import { UserFacade } from '@state/user';
+import { UserFacade } from '@app/store/user';
 import { filter, map, take, tap } from 'rxjs/operators';
 
 @Injectable({
