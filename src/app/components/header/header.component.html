@@ -1,6 +1,9 @@
 <mat-toolbar class="dsr-header-toolbar mat-toolbar">
   <div class="dsr-header-toolbar__content">
-    <div class="dsr-header-toolbar__title dsr-hide-for-small dsr-header-title">
+    <div
+      class="dsr-header-toolbar__title dsr-hide-for-small dsr-header-title"
+      data-qa="headerTitle"
+    >
       Dikusar Angular App.
     </div>
 
@@ -10,6 +13,7 @@
         [routerLink]="['/about']"
         routerLinkActive="dsr-header-active"
         [routerLinkActiveOptions]="{ exact: true }"
+        data-qa="howToUse"
       >
         <mat-icon class="mat-icon material-icons"> help_outline </mat-icon>
         <span class="dsr-hide-for-small">How to use</span>

@@ -19,4 +19,12 @@ describe('AboutComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render text about application', () => {
+    const compiled = fixture.debugElement.nativeElement;
+
+    expect(compiled.querySelector('.dsr-about-content').textContent).toContain(
+      'This application helps to work'
+    );
+  });
 });

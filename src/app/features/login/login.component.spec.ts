@@ -22,4 +22,28 @@ describe('LoginComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render Sign in title', () => {
+    const compiled = fixture.debugElement.nativeElement;
+
+    expect(compiled.querySelector('.mat-card-title').textContent).toContain('Sign in');
+  });
+
+  it('should render Sign in button', () => {
+    const compiled = fixture.debugElement.nativeElement;
+
+    expect(compiled.querySelector('button').textContent).toContain('Sign in');
+  });
+
+  it('should render form input with Email label', () => {
+    const compiled = fixture.debugElement.nativeElement;
+
+    expect(compiled.querySelector('form').textContent).toContain('Email');
+  });
+
+  it('should render form input with Password label', () => {
+    const compiled = fixture.debugElement.nativeElement;
+
+    expect(compiled.querySelector('form').textContent).toContain('Password');
+  });
 });

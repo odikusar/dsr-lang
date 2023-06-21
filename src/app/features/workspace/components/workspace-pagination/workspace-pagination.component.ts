@@ -64,13 +64,9 @@ export class WorkspacePaginationComponent implements OnInit, OnChanges, OnDestro
 
   ngOnChanges(changes: SimpleChanges): void {
     if (!!changes['rowsTotalCount']) {
-      this.form.controls.pages.clear({ emitEvent: false });
+      this.initPages();
 
       if (this.rowsTotalCount > 0) {
-        for (let i = 0; i < this.pagesCount; i++) {
-          this.form.controls.pages.push(this.fb.control<boolean>(true), { emitEvent: false });
-        }
-
         if (this.form.controls.withFlag.value) {
           this.form.controls.withFlag.updateValueAndValidity();
         } else {
@@ -83,6 +79,14 @@ export class WorkspacePaginationComponent implements OnInit, OnChanges, OnDestro
   ngOnDestroy(): void {
     this.onDestroy$.next();
     this.onDestroy$.complete();
+  }
+
+  initPages(): void {
+    this.form.controls.pages.clear({ emitEvent: false });
+
+    for (let i = 0; i < this.pagesCount; i++) {
+      this.form.controls.pages.push(this.fb.control<boolean>(true), { emitEvent: false });
+    }
   }
 
   watchPagesChanges(): void {
@@ -138,7 +142,7 @@ export class WorkspacePaginationComponent implements OnInit, OnChanges, OnDestro
 
           for (let i = 0; i < this.pagesCount; i++) {
             this.form.controls.pages.push(
-              this.fb.control<boolean>(pagesWithRows.indexOf(i) !== -1 ? true : false),
+              this.fb.control<boolean>(pagesWithRows.indexOf(i) !== -1),
               {
                 emitEvent: false,
               }
@@ -177,13 +181,13 @@ export class WorkspacePaginationComponent implements OnInit, OnChanges, OnDestro
     return this.rowsTotalCount < ROWS_PER_PAGE ? 1 : Math.ceil(this.rowsTotalCount / ROWS_PER_PAGE);
   }
 
-  addUpRows() {
+  addUpRows(): void {
     this.form.patchValue({
       from: this.form.controls.from.value + DEDUCTION_COEFFICIENT,
     });
   }
 
-  deductRows() {
+  deductRows(): void {
     this.form.patchValue({
       to: this.form.controls.to.value - DEDUCTION_COEFFICIENT,
     });

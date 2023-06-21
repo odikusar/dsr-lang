@@ -45,6 +45,10 @@ export class WorkspaceControlsComponent implements OnInit, OnDestroy {
   }
 
   showNext(): void {
+    if (!this.rowsLeftCount) {
+      return;
+    }
+
     this.memoRowFacade.isAnswerDisplayed$.next(false);
     this.memoRowFacade.setShown(this.memoRow.id);
   }
@@ -55,7 +59,7 @@ export class WorkspaceControlsComponent implements OnInit, OnDestroy {
 
   showAnswer(): void {
     this.memoRowFacade.isAnswerDisplayed$.next(true);
-    if (this.rowsLeftCount == 0) {
+    if (this.rowsLeftCount === 0) {
       this.toastr.success("Congrats that's all");
     }
   }

@@ -1,5 +1,4 @@
-<!-- <input type="checkbox" formControlName="checkAllPages" /> All Pages showTranslation -->
-<div class="dsr-control-row">
+<div class="dsr-control-row" data-qa="topLevelControls">
   <button
     dsrButtonClass
     mat-raised-button
@@ -10,22 +9,16 @@
   </button>
   <button dsrButtonClass mat-raised-button (click)="showAnswer()">Show Answer</button>
 
-  <button
-    dsrButtonClass
-    class="dsr-next-btn"
-    mat-raised-button
-    (click)="showNext()"
-    [disabled]="!rowsLeftCount"
-  >
+  <button dsrButtonClass class="dsr-next-btn" mat-raised-button (click)="showNext()">
     Next Word
   </button>
 </div>
-<div class="dsr-control-row">
+<div class="dsr-control-row" data-qa="middleLevelControls">
   <mat-checkbox [formControl]="isTranslationByDefaultCtrl">Translation by default</mat-checkbox>
   <button dsrButtonClass mat-raised-button (click)="reset()">Repeat Again</button>
 </div>
 
-<div class="dsr-control-row">
+<div class="dsr-control-row" data-qa="bottomLevelControls">
   <button dsrButtonClass mat-raised-button (click)="openImage()">> Google Image</button>
 
   <button dsrButtonClass mat-raised-button (click)="openExplanation()">> Explanation</button>

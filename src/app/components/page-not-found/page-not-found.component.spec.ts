@@ -19,4 +19,12 @@ describe('PageNotFoundComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render sorry text', () => {
+    const compiled = fixture.debugElement.nativeElement;
+
+    expect(compiled.querySelector('[data-qa="sorryText"]').textContent).toContain(
+      'Sorry, page not found'
+    );
+  });
 });

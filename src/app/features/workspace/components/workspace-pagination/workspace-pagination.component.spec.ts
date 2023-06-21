@@ -37,4 +37,18 @@ describe('WorkspacePaginationComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should render panel with labels', () => {
+    const compiled = fixture.debugElement.nativeElement;
+
+    expect(compiled.querySelector('.dsr-pages-top-panel').textContent).toContain('words left:');
+    expect(compiled.querySelector('.dsr-pages-top-panel').textContent).toContain('current index:');
+    expect(compiled.querySelector('.dsr-pages-top-panel').textContent).toContain('with flag');
+  });
+
+  it('should render pages label', () => {
+    const compiled = fixture.debugElement.nativeElement;
+
+    expect(compiled.querySelector('.dsr-pages-list').textContent).toContain('pages:');
+  });
 });
