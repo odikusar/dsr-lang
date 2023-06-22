@@ -23,7 +23,7 @@ describe('HeaderComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render header', () => {
+  it('should render header with title', () => {
     expect(compiled.querySelector('[data-qa="headerTitle"]').textContent).toContain(
       'Dikusar Angular App.'
     );

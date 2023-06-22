@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'dsr-page-not-found',
@@ -9,8 +9,4 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   standalone: true,
   imports: [CommonModule],
 })
-export class PageNotFoundComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class PageNotFoundComponent {}

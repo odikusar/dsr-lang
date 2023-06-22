@@ -1,8 +1,9 @@
 # Oleg Dikusar demo Angular Progressive Web App.
 
-[Click here for the demo](https://dsr-lang.web.app/)
+[Click here for the Live Demo](https://dsr-lang.web.app/)
 
 ## Stack:
+
 - Angular 14, TypeScript, Reactive Forms, Animation, Standalone components
 - Angular Material + theming
 - Firebase, Authentication, FireStorage, FireHosting
@@ -13,8 +14,6 @@
 PWA screenshot:
 
 <img src="https://dsr-lang.web.app/assets/images/app-memo.jpg"  width="300">
-
-
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.8.
 
