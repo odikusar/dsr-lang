@@ -8,4 +8,4 @@ export const ROWS_PER_PAGE = 53;
 
 export const START_ROW_INDEX = 1;
 
-export const DEDUCTION_COEFFICIENT = 10;
+export const DEDUCTION_COEFFICIENT = 13;
