@@ -22,6 +22,7 @@ export class WorkspaceControlsComponent implements OnInit, OnDestroy {
   private onDestroy$: Subject<void> = new Subject();
 
   isTranslationByDefaultCtrl = new FormControl<boolean>(null);
+  isRandomizeCtrl = new FormControl<boolean>(null);
 
   constructor(
     private memoRowFacade: MemoRowFacade,
@@ -31,12 +32,17 @@ export class WorkspaceControlsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isTranslationByDefaultCtrl.setValue(this.isTranslationByDefault);
+    this.isRandomizeCtrl.setValue(this.memoRowFacade.isRandomize$.getValue());
 
     this.isTranslationByDefaultCtrl.valueChanges
       .pipe(takeUntil(this.onDestroy$))
       .subscribe((value) => {
         this.userFacade.updateSettings({ isTranslationByDefault: value });
       });
+
+    this.isRandomizeCtrl.valueChanges.pipe(takeUntil(this.onDestroy$)).subscribe((value) => {
+      this.memoRowFacade.isRandomize$.next(value);
+    });
   }
 
   ngOnDestroy(): void {

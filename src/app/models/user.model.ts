@@ -5,4 +5,5 @@ export interface User {
   activeMemoFileId: string;
   isTranslationByDefault: boolean;
   isDemo: boolean;
+  isRandom?: boolean;
 }

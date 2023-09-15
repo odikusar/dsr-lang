@@ -12,6 +12,7 @@ import { BehaviorSubject, combineLatest, filter, map, mergeMap, shareReplay } fr
 export class MemoRowFacade {
   constructor(private store: Store<fromReducer.MemoRowState>, private memoService: MemoService) {}
   memoRows$ = this.store.pipe(select(fromSelectors.selectAll()));
+  isRandomize$: BehaviorSubject<boolean> = new BehaviorSubject(true);
   isLoading$ = this.store.pipe(select(fromSelectors.selectIsLoading()));
   selectedFreshMemoRows$ = this.store.pipe(select(fromSelectors.selectAllFreshInSelection()));
   previousMemoRow$ = this.store.pipe(select(fromSelectors.selectPreviousMemoRow()));
@@ -26,10 +27,21 @@ export class MemoRowFacade {
     map((memoRows) => this.memoService.getRandomMemoRow(memoRows)),
     shareReplay()
   );
+  nextMemoRow$ = this.selectedFreshMemoRows$.pipe(
+    filter((memoRows) => !!memoRows && !!memoRows.length),
+    map((memoRows) => memoRows[0])
+  );
   memoRow$ = this.isPreviousMemoRowShown$.pipe(
-    mergeMap((isPreviousMemoRowShown: boolean) =>
-      isPreviousMemoRowShown ? this.previousMemoRow$ : this.randomMemoRow$
-    )
+    mergeMap((isPreviousMemoRowShown: boolean) => {
+      switch (true) {
+        case isPreviousMemoRowShown:
+          return this.previousMemoRow$;
+        case this.isRandomize$.value:
+          return this.randomMemoRow$;
+        default:
+          return this.nextMemoRow$;
+      }
+    })
   );
   rowsLeftCount$ = this.selectedFreshMemoRows$.pipe(
     map((memoRows) => (memoRows?.length > 0 ? memoRows?.length - 1 : 0))

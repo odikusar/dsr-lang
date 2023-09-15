@@ -14,7 +14,8 @@
   </button>
 </div>
 <div class="dsr-control-row" data-qa="middleLevelControls">
-  <mat-checkbox [formControl]="isTranslationByDefaultCtrl">Translation by default</mat-checkbox>
+  <mat-checkbox [formControl]="isRandomizeCtrl">Random</mat-checkbox>
+  <mat-checkbox [formControl]="isTranslationByDefaultCtrl">Translation first</mat-checkbox>
   <button dsrButtonClass mat-raised-button (click)="reset()">Repeat Again</button>
 </div>
 
